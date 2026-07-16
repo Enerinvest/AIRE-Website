@@ -50,8 +50,8 @@
 
   /* ---------- Nav ---------- */
   header.site{
-    position:sticky; top:0; z-index:50; background:rgba(242,246,247,.88);
-    backdrop-filter:blur(10px); border-bottom:1px solid var(--border);
+    position:sticky; top:0; z-index:50; background:var(--white);
+    border-bottom:1px solid var(--border);
   }
   .nav-row{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
   .logo{display:flex; align-items:center; gap:9px; text-decoration:none;}
@@ -198,9 +198,10 @@
   .why-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
   @media (max-width:900px){ .why-grid{grid-template-columns:repeat(2,1fr);} }
   @media (max-width:620px){ .why-grid{grid-template-columns:1fr;} }
-  .why-card{background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:26px 24px;}
-  .why-icon{width:38px;height:38px;border-radius:10px; background:var(--panel); display:flex; align-items:center; justify-content:center; margin-bottom:16px;}
-  .why-card h4{font-family:var(--serif); font-size:16.5px; color:var(--navy); margin:0 0 8px; font-weight:600;}
+  .why-card{background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:18px 20px;}
+  .why-head{display:flex; align-items:center; gap:10px; margin-bottom:8px;}
+  .why-icon{width:38px;height:38px;border-radius:10px; background:var(--panel); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .why-card h4{font-family:var(--serif); font-size:16.5px; color:var(--navy); margin:0; font-weight:600;}
   .why-card p{font-size:13.5px; color:var(--muted); margin:0;}
   #consistency .consistency-grid{display:grid; grid-template-columns:1fr .85fr; gap:56px; align-items:center;}
   #consistency .consistency-cards{display:flex; flex-direction:column; gap:16px;}
@@ -333,7 +334,7 @@
 </section>
 
 <!-- ============ CONSISTENCY / ENABLEMENT ============ -->
-<section id="consistency" style="padding-bottom:44px;">
+<section id="consistency" style="padding-bottom:8px;">
   <div class="wrap">
     <div class="consistency-grid">
       <div>
@@ -344,13 +345,17 @@
       </div>
       <div class="consistency-cards">
         <div class="why-card">
-          <div class="why-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F3D52" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg></div>
-          <h4>A shared prompt library</h4>
+          <div class="why-head">
+            <div class="why-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F3D52" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg></div>
+            <h4>A shared prompt library</h4>
+          </div>
           <p>Every case starts from built-in, editable prompts for what your team actually does — an asset summary, a DD pass, a partner briefing — one click to run, refined once and reused by everyone, instead of reinvented per person, per week.</p>
         </div>
         <div class="why-card">
-          <div class="why-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F3D52" stroke-width="2"><path d="M9 12h6M9 16h6M4 3h16v18H4z"/></svg></div>
-          <h4>Templates that enforce your house format</h4>
+          <div class="why-head">
+            <div class="why-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F3D52" stroke-width="2"><path d="M9 12h6M9 16h6M4 3h16v18H4z"/></svg></div>
+            <h4>Templates that enforce your house format</h4>
+          </div>
           <p>Upload your firm's actual memo, financial model, deck, or agreement template with tagged placeholders — DealCase.ai fills the data automatically and drafts the AI-authored sections in place. Same structure, same sections, same look, whether it's your newest analyst or your most senior one running it.</p>
         </div>
       </div>
@@ -359,7 +364,7 @@
 </section>
 
 <!-- ============ PRODUCT / FEATURES ============ -->
-<section id="product">
+<section id="product" style="padding-top:40px;">
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">The product</p>
@@ -712,11 +717,10 @@
     <p class="eyebrow" style="margin-bottom:8px;">Open account</p>
     <h2 style="font-size:23px; margin-bottom:10px;">Let's set your team up.</h2>
     <p style="font-size:14px; color:var(--muted); margin-bottom:22px;">Tell us a little about your portfolio — someone from our team will personally reach out to walk you through setup.</p>
-    <!-- TODO before launch: this posts to a placeholder Formspree endpoint that is not connected to any real account. Replace with your own Formspree form ID (or another real destination) before going live. -->
-    <form action="https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID" method="POST" style="display:flex; flex-direction:column; gap:12px;">
+    <form action="https://formspree.io/f/mjgnybgl" method="POST" style="display:flex; flex-direction:column; gap:12px;">
       <div style="display:flex; gap:12px;">
-        <input type="text" name="first_name" placeholder="Name" required style="flex:1; padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text);">
-        <input type="text" name="last_name" placeholder="Surname" required style="flex:1; padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text);">
+        <input type="text" name="first_name" placeholder="Name" required style="flex:1; min-width:0; padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text);">
+        <input type="text" name="last_name" placeholder="Surname" required style="flex:1; min-width:0; padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text);">
       </div>
       <input type="email" name="email" placeholder="Work email" required style="padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text);">
       <textarea name="message" placeholder="Tell us about your portfolio (size, location, what you'd like to solve first)" rows="4" style="padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text); resize:vertical;"></textarea>
