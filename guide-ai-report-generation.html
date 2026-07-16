@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="/favicon.png">
+<title>AI Investment Report Generation for Real Estate: A Practical Recipe | DealCase.ai</title>
+<meta name="description" content="How to draft real estate asset reports section-by-section with AI, flag missing data instead of hiding it, and where consistency at scale becomes the limit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700;8..60,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F3D52; --navy-dark:#0B2A38; --navy-hover:#0A2C3C;
+    --teal:#2EC4B6; --teal-deep:#1F8A6D;
+    --slate:#5B6FA8; --sand:#B5803A; --dusty:#3D6A8C; --violet:#7C6FE0; --orange:#E2774C; --red:#C0492B;
+    --bg:#F2F6F7; --panel:#F4FAFA; --white:#FFFFFF;
+    --border:#E8EEF0; --border-soft:#E2E9EB;
+    --text:#1B2A33; --muted:#5C7C8A; --faint:#A6B6BD;
+    --serif:'Source Serif 4', Georgia, serif;
+    --sans:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono:'IBM Plex Mono','SF Mono', Consolas, monospace;
+    --r-sm:8px; --r-md:12px; --r-lg:18px; --r-xl:26px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; font-family:var(--sans); color:var(--text); background:var(--bg); -webkit-font-smoothing:antialiased; line-height:1.6;}
+  a{color:inherit;}
+  .wrap{max-width:820px; margin:0 auto; padding:0 28px;}
+  .wrap-wide{max-width:1180px; margin:0 auto; padding:0 28px;}
+  h1,h2,h3,h4{font-family:var(--serif); color:var(--navy); margin:0;}
+  p{margin:0 0 16px;}
+  .btn{display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:14.5px; padding:12px 22px; border-radius:999px; border:1.5px solid transparent; cursor:pointer; text-decoration:none; transition:all .15s ease;}
+  .btn-primary{background:var(--navy); color:#fff;} .btn-primary:hover{background:var(--navy-hover);}
+  .btn-ghost{background:transparent; color:var(--navy); border-color:var(--border-soft);} .btn-ghost:hover{border-color:var(--teal); background:var(--panel);}
+
+  header.site{position:sticky; top:0; z-index:50; background:rgba(242,246,247,.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--border);}
+  .nav-row{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
+  .logo{display:flex; align-items:center; gap:9px; text-decoration:none;}
+  .logo-word{font-family:var(--serif); font-weight:700; font-size:19px; color:var(--navy);}
+  .logo-word span{color:var(--teal);}
+  nav.links{display:flex; align-items:center; gap:28px;}
+  nav.links a{font-size:14px; font-weight:500; color:var(--muted); text-decoration:none;}
+  nav.links a:hover, nav.links a.active{color:var(--navy);}
+  .nav-actions{display:flex; align-items:center; gap:12px;}
+  @media (max-width:900px){ nav.links{display:none;} }
+
+  .breadcrumb{font-family:var(--mono); font-size:12px; color:var(--muted); padding:22px 0 0;}
+  .breadcrumb a{color:var(--teal-deep); text-decoration:none;}
+  .breadcrumb a:hover{text-decoration:underline;}
+
+  .art-head{padding:22px 0 40px; border-bottom:1px solid var(--border); margin-bottom:44px;}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:var(--teal-deep); margin:0 0 14px;}
+  .art-head h1{font-size:34px; line-height:1.2; font-weight:700; letter-spacing:-.4px; margin-bottom:16px;}
+  .art-head .sub{font-size:17px; color:var(--muted); max-width:620px;}
+  .meta-row{display:flex; gap:18px; margin-top:20px; font-size:12.5px; color:var(--faint); font-family:var(--mono);}
+
+  section{margin-bottom:46px;}
+  h2{font-size:24px; font-weight:700; margin-bottom:16px; letter-spacing:-.2px;}
+  h3{font-size:17.5px; font-weight:600; margin:24px 0 10px; color:var(--navy);}
+  .step-num{display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:7px; background:var(--navy); color:#fff; font-family:var(--mono); font-size:12px; font-weight:700; margin-right:8px; flex-shrink:0;}
+  .lede{font-size:17px; color:var(--text);}
+  ul, ol{padding-left:22px; margin:0 0 16px;}
+  li{margin-bottom:8px;}
+
+  .prompt-box{background:var(--navy); color:#fff; border-radius:var(--r-md); padding:22px 24px; margin:20px 0; font-family:var(--mono); font-size:13.5px; line-height:1.65;}
+  .prompt-box .lbl{font-family:var(--sans); font-weight:700; font-size:11.5px; text-transform:uppercase; letter-spacing:.6px; color:var(--teal); margin-bottom:12px; display:block;}
+
+  .callout{border-radius:var(--r-md); padding:18px 22px; margin:22px 0; font-size:14.5px;}
+  .callout-limit{background:#FFF1EA; border:1px solid #FBDCC8;}
+  .callout-limit .lbl{font-weight:700; color:var(--orange); font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; display:block;}
+  .callout-build{background:var(--panel); border:1px solid var(--border); font-family:var(--mono); font-size:12.5px; color:var(--muted);}
+  .callout-cta{background:var(--panel); border:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .callout-cta .txt{font-size:14.5px; color:var(--text);}
+  .callout-cta .txt b{color:var(--navy);}
+  .callout-cta a{white-space:nowrap;}
+
+  .faq-item{margin-bottom:20px;}
+
+  .sibling-nav{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:8px;}
+  @media (max-width:600px){ .sibling-nav{grid-template-columns:1fr;} }
+  .sibling-card{background:var(--white); border:1px solid var(--border); border-radius:var(--r-md); padding:18px 20px; text-decoration:none; transition:border-color .15s ease;}
+  .sibling-card:hover{border-color:var(--teal);}
+  .sibling-card .dir{font-family:var(--mono); font-size:10.5px; color:var(--faint); text-transform:uppercase; letter-spacing:.5px;}
+  .sibling-card .t{font-size:14.5px; font-weight:600; color:var(--navy); margin-top:4px;}
+
+  footer{background:var(--white); border-top:1px solid var(--border); padding:44px 0 30px; margin-top:60px;}
+  .foot-bottom{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:12.5px; color:var(--faint); font-family:var(--mono);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap-wide nav-row">
+    <a href="index.html" class="logo">
+      <img src="/logo.png" alt="DealCase.ai" style="height:20px; width:auto;">
+    </a>
+    <nav class="links">
+      <a href="index.html#product">Product</a>
+      <a href="index.html#personas">Who it's for</a>
+      <a href="index.html#why-ai">Why AI</a>
+      <a href="guide-pillar-ai-automation-real-estate.html" class="active">Guides</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="https://app.dealcase.ai/login" class="btn btn-ghost">Log in</a>
+      <a href="index.html#open-account" class="btn btn-primary">Open Account</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="breadcrumb"><a href="guide-pillar-ai-automation-real-estate.html">Guides</a> / <a href="guide-pillar-ai-automation-real-estate.html">AI &amp; Automation</a> / AI-Generated Report Production</div>
+
+  <div class="art-head">
+    <p class="eyebrow">Recipe 4 of 5 · report production</p>
+    <h1>AI Investment Report Generation for Real Estate: A Practical Recipe</h1>
+    <p class="sub">Most of the time spent on a disposal report isn't analysis — it's reading, summarising, and formatting documents that already contain the information. Here's how to hand that part to AI without losing control of accuracy.</p>
+    <div class="meta-row"><span>7 min read</span><span>By the DealCase.ai team</span></div>
+  </div>
+
+  <section>
+    <p class="lede">Asset reports sit at the intersection of two expensive activities: assembling information from multiple sources, and translating it into a format decision-makers can act on quickly. A standard disposal report might draw on an appraisal, a technical inspection, a legal title summary, cadastral data, market comparables, and a broker's pricing view. AI doesn't replace the analyst's judgment — it removes the reading and formatting work, so the analyst's time goes to the part that actually requires their expertise.</p>
+  </section>
+
+  <section>
+    <h2>The recipe: AI-assisted report drafting</h2>
+
+    <h3><span class="step-num">1</span>Define your report structure</h3>
+    <p>Before involving any AI tool, fix the structure of your output. A standard disposal report might have: Executive Summary, Property Description &amp; Physical Condition, Legal &amp; Cadastral Status, Valuation &amp; Market Positioning, Recommended Disposal Strategy, Outstanding Actions. Once this template is stable, the AI's job is to populate it.</p>
+
+    <h3><span class="step-num">2</span>Document preparation</h3>
+    <p>Collect the source documents for the asset into your AI project folder. The quality of the AI output is directly proportional to the quality and completeness of the inputs.</p>
+
+    <h3><span class="step-num">3</span>Section-by-section drafting</h3>
+    <p>Work section by section, not in a single prompt.</p>
+    <div class="prompt-box">
+      <span class="lbl">Prompt template — report section drafting</span>
+      You are a real estate analyst preparing an asset report for an institutional client. Using only the attached document, draft the '[Executive Summary or other section name]' section. Requirements: write in third person, be factual and specific, do not include information not present in the source document, flag any gaps with [MISSING: description]. Maximum length: [250] words. Write in paragraphs and use bullet points when appropriate.
+    </div>
+    <p>The instruction to flag missing data is important. An AI that fills gaps silently produces a report that looks complete but contains assumptions. The [MISSING] flag makes the review task explicit.</p>
+
+    <h3><span class="step-num">4</span>Review [MISSING] flags</h3>
+    <p>Before assembly, review every flag in the drafted sections. For each gap, either supply the missing information from source documents or note it explicitly as unavailable. This ensures the final report is accurate and complete, with no silent assumptions carried through.</p>
+
+    <h3><span class="step-num">5</span>Assembly and distribution</h3>
+    <p>Once sections are reviewed, prompt the AI tool to insert them into the template and produce a full draft for your review.</p>
+
+    <div class="callout callout-build">Build time: 2–3 hours for the workflow. The template definition is a one-time investment of 2–4 hours.</div>
+
+    <div class="callout callout-limit">
+      <span class="lbl">Where the DIY approach reaches its limit</span>
+      The practical constraint is consistency at scale. When several analysts produce reports across tens of assets using individual AI prompts, output quality varies with each person's prompting discipline. There's no enforcement layer ensuring the correct source documents were used, or that every [MISSING] flag was resolved before the report went out.
+    </div>
+  </section>
+
+  <section>
+    <div class="callout callout-cta">
+      <span class="txt">In DealCase.ai, report templates and policy rules are set once at the account level — <b>every analyst's output follows the same house standard automatically</b>, with source citations and no silent gaps.</span>
+      <a href="index.html#product" class="btn btn-primary">See how →</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>FAQ</h2>
+    <div class="faq-item">
+      <h3>Can AI write a real estate investment memo from source documents?</h3>
+      <p>Yes, section by section, provided you fix the report structure first and instruct the model to flag missing data explicitly rather than fill gaps silently. Working in one large prompt across all sections at once produces noticeably weaker results than a section-by-section approach.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How do you stop AI from hallucinating in an asset report?</h3>
+      <p>Constrain it to "using only the attached document," require third-person factual language, and require an explicit [MISSING: description] flag for anything not present in the source — then review every flag before the report goes out. This makes omissions visible instead of silently smoothed over.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Why does report quality vary between analysts using the same AI tool?</h3>
+      <p>Because each person's individual prompt — and how rigorously they review [MISSING] flags — differs. Without a shared, enforced template and policy layer, consistency depends entirely on each analyst's discipline.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Continue the series</h2>
+    <div class="sibling-nav">
+      <a href="guide-document-contract-automation.html" class="sibling-card">
+        <div class="dir">Recipe 2</div>
+        <div class="t">← Document &amp; Contract Automation</div>
+      </a>
+      <a href="guide-partner-performance-tracking.html" class="sibling-card">
+        <div class="dir">Recipe 5</div>
+        <div class="t">Partner Coordination &amp; Performance →</div>
+      </a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap-wide foot-bottom">
+    <span>© 2026 DealCase.ai. All rights reserved.</span>
+    <span><a href="guide-pillar-ai-automation-real-estate.html" style="color:var(--muted); text-decoration:none;">← Back to all guides</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

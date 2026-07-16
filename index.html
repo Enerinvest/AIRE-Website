@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="/favicon.png">
+<title>DealCase.ai — Your portfolio, finally in one place</title>
+<meta name="description" content="DealCase.ai is the AI-native workspace built for real estate teams — share assets, contacts and documents, track progress, and produce consistent reports with an AI that knows your portfolio. EU-hosted.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700;8..60,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F3D52; --navy-dark:#0B2A38; --navy-hover:#0A2C3C;
+    --teal:#2EC4B6; --teal-deep:#1F8A6D;
+    --slate:#5B6FA8; --sand:#B5803A; --dusty:#3D6A8C; --violet:#7C6FE0; --orange:#E2774C; --red:#C0492B;
+    --bg:#F2F6F7; --panel:#F4FAFA; --white:#FFFFFF;
+    --border:#E8EEF0; --border-soft:#E2E9EB;
+    --text:#1B2A33; --muted:#5C7C8A; --faint:#A6B6BD;
+    --serif:'Source Serif 4', Georgia, serif;
+    --sans:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono:'IBM Plex Mono','SF Mono', Consolas, monospace;
+    --r-sm:8px; --r-md:12px; --r-lg:18px; --r-xl:26px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; font-family:var(--sans); color:var(--text); background:var(--bg);
+    -webkit-font-smoothing:antialiased; line-height:1.55;
+  }
+  a{color:inherit;}
+  img,svg{display:block; max-width:100%;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+  .eyebrow{
+    font-family:var(--mono); font-size:11.5px; font-weight:600; letter-spacing:1.6px;
+    text-transform:uppercase; color:var(--teal-deep); margin:0 0 14px;
+  }
+  h1,h2,h3{font-family:var(--serif); color:var(--navy); margin:0;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; font-family:var(--sans); font-weight:600;
+    font-size:14.5px; padding:12px 22px; border-radius:999px; border:1.5px solid transparent;
+    cursor:pointer; text-decoration:none; transition:all .15s ease;
+  }
+  .btn-primary{background:var(--navy); color:#fff;}
+  .btn-primary:hover{background:var(--navy-hover);}
+  .btn-ghost{background:transparent; color:var(--navy); border-color:var(--border-soft);}
+  .btn-ghost:hover{border-color:var(--teal); background:var(--panel);}
+  .btn-onteal{background:var(--white); color:var(--navy);}
+  .btn-onteal:hover{background:var(--ice, #EAF6F6);}
+
+  /* ---------- Nav ---------- */
+  header.site{
+    position:sticky; top:0; z-index:50; background:rgba(242,246,247,.88);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--border);
+  }
+  .nav-row{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
+  .logo{display:flex; align-items:center; gap:9px; text-decoration:none;}
+  .logo-word{font-family:var(--serif); font-weight:700; font-size:20px; color:var(--navy); letter-spacing:.1px;}
+  .logo-word span{color:var(--teal);}
+  nav.links{display:flex; align-items:center; gap:30px;}
+  nav.links a{font-size:14px; font-weight:500; color:var(--muted); text-decoration:none;}
+  nav.links a:hover{color:var(--navy);}
+  .nav-actions{display:flex; align-items:center; gap:12px;}
+  @media (max-width:900px){ nav.links{display:none;} }
+
+  /* ---------- Hero ---------- */
+  section.hero{padding:74px 0 40px;}
+  .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center;}
+  @media (max-width:980px){ .hero-grid{grid-template-columns:1fr;} }
+  .hero h1{font-size:44px; line-height:1.12; font-weight:700; letter-spacing:-.5px;}
+  .hero h1 em{font-style:normal; color:var(--teal-deep);}
+  .hero p.sub{font-size:17px; color:var(--muted); margin:20px 0 30px; max-width:480px;}
+  .hero-ctas{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:26px;}
+  .hero-note{font-size:12.5px; color:var(--faint); display:flex; align-items:center; gap:7px;}
+  .hero-note svg{flex-shrink:0;}
+
+  /* hero visual: real product-style crop */
+  .hero-visual{position:relative;}
+  .device-card{
+    background:var(--white); border:1px solid var(--border); border-radius:var(--r-xl);
+    box-shadow:0 24px 60px -20px rgba(15,61,82,.28), 0 4px 16px rgba(15,61,82,.06);
+    overflow:hidden; transform:rotate(0.4deg);
+  }
+  .device-topbar{display:flex; align-items:center; gap:8px; padding:12px 16px; border-bottom:1px solid var(--border); background:#FBFDFD;}
+  .dot{width:8px;height:8px;border-radius:50%;}
+  .device-title{margin-left:6px; font-size:12px; color:var(--faint); font-family:var(--mono);}
+  .device-body{padding:20px;}
+  .chat-line-user{
+    background:var(--navy); color:#fff; font-size:13px; padding:9px 14px; border-radius:12px;
+    max-width:78%; margin-left:auto; margin-bottom:16px; line-height:1.5;
+  }
+  .chat-line-ai{font-size:13px; color:var(--text); line-height:1.6; margin-bottom:14px;}
+  .report-card{border:1px solid var(--border); border-radius:var(--r-md); overflow:hidden; box-shadow:0 3px 10px rgba(15,61,82,.05);}
+  .report-head{display:flex; align-items:center; gap:10px; padding:11px 15px; border-bottom:1px solid var(--border); background:#fff;}
+  .report-icon{width:24px;height:24px;border-radius:7px; background:var(--teal); flex-shrink:0;}
+  .report-head .t{font-family:var(--serif); font-weight:600; font-size:14px; color:var(--navy);}
+  .report-row{display:flex; gap:12px; padding:8px 15px; border-bottom:1px solid #F0F4F4; font-size:12.5px;}
+  .report-row:last-child{border-bottom:none;}
+  .report-row .k{width:96px; flex-shrink:0; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; color:var(--muted); padding-top:1px;}
+  .report-row .v{color:var(--text);}
+  .report-row .v.flag{color:var(--orange); font-weight:600;}
+  .report-foot{display:flex; align-items:center; gap:6px; padding:9px 15px; background:var(--panel); font-size:11px; color:var(--muted);}
+  .badge-float{
+    position:absolute; background:var(--white); border:1px solid var(--border); border-radius:var(--r-md);
+    padding:10px 14px; box-shadow:0 12px 30px -8px rgba(15,61,82,.22); font-size:12px; display:flex; align-items:center; gap:8px;
+  }
+  .badge-float.b1{ top:-18px; right:-14px; }
+  .badge-float.b2{ bottom:-16px; left:-18px; }
+  .badge-float strong{font-family:var(--serif); color:var(--navy); font-size:13px;}
+  @media (max-width:640px){ .badge-float{display:none;} .hero h1{font-size:32px;} }
+
+  #guides .recipe-grid{grid-template-columns:repeat(3,1fr);}
+  @media (max-width:900px){ #guides .recipe-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:620px){ #guides .recipe-grid{grid-template-columns:1fr;} }
+
+  /* ---------- Trust strip ---------- */
+  section.trust{padding:34px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:var(--white);}
+  .trust-row{display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;}
+  .trust-item{display:flex; align-items:center; gap:10px; font-size:13px; color:var(--muted); font-weight:500;}
+  .trust-item svg{color:var(--teal-deep); flex-shrink:0;}
+  .trust-item b{color:var(--navy);}
+
+  /* ---------- Section shell ---------- */
+  section{padding:88px 0;}
+  .section-head{max-width:620px; margin-bottom:52px;}
+  .section-head h2{font-size:32px; font-weight:700; letter-spacing:-.3px; line-height:1.22;}
+  .section-head p{color:var(--muted); font-size:16px; margin-top:14px;}
+
+  /* ---------- Features ---------- */
+  .feature{display:grid; grid-template-columns:.9fr 1.1fr; gap:60px; align-items:center; margin-bottom:96px;}
+  .feature:last-child{margin-bottom:0;}
+  .feature.rev{grid-template-columns:1.1fr .9fr;}
+  .feature.rev .feature-text{order:2;}
+  .feature.rev .feature-visual{order:1;}
+  @media (max-width:900px){
+    .feature, .feature.rev{grid-template-columns:1fr;}
+    .feature.rev .feature-text, .feature.rev .feature-visual{order:initial;}
+  }
+  .feature-num{font-family:var(--mono); font-size:12px; color:var(--teal-deep); font-weight:600; margin-bottom:10px;}
+  .feature-text h3{font-size:24px; font-weight:700; line-height:1.28; margin-bottom:12px;}
+  .feature-text p{color:var(--muted); font-size:15.5px;}
+  .feature-visual{
+    background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg);
+    box-shadow:0 16px 40px -18px rgba(15,61,82,.2); overflow:hidden; padding:0;
+  }
+  .fv-head{display:flex; align-items:center; gap:8px; padding:10px 14px; border-bottom:1px solid var(--border); background:#FBFDFD;}
+  .fv-body{padding:16px;}
+
+  /* mini asset table (feature 1) */
+  .mini-table{width:100%; border-collapse:collapse; font-size:12px;}
+  .mini-table th{text-align:left; font-size:9.5px; text-transform:uppercase; letter-spacing:.4px; color:var(--muted); font-weight:700; padding:7px 10px; border-bottom:1px solid var(--border); background:var(--panel);}
+  .mini-table td{padding:9px 10px; border-bottom:1px solid var(--border);}
+  .mini-table tr:last-child td{border-bottom:none;}
+  .pill{display:inline-flex; align-items:center; gap:5px; font-size:10.5px; font-weight:600; padding:3px 9px; border-radius:999px;}
+  .pill .d{width:5px;height:5px;border-radius:50%;}
+  .pill-mgmt{background:#EAF6F6; color:var(--navy);} .pill-mgmt .d{background:var(--teal);}
+  .pill-sale{background:#FFF1EA; color:var(--orange);} .pill-sale .d{background:var(--orange);}
+  .pill-dd{background:#F1F0FA; color:var(--violet);} .pill-dd .d{background:var(--violet);}
+  .mono-id{font-family:var(--mono); font-size:10.5px; color:var(--muted);}
+
+  /* chat/ai feature */
+  .mini-chat .u{background:var(--navy); color:#fff; font-size:12.5px; padding:8px 13px; border-radius:11px; max-width:80%; margin-left:auto; margin-bottom:12px;}
+  .mini-chat .a{font-size:12.5px; color:var(--text); margin-bottom:10px; line-height:1.55;}
+  .mini-chat .a b{color:var(--navy);}
+
+  /* template tags */
+  .tag-chip{font-family:var(--mono); font-size:11px; background:var(--panel); border:1px solid var(--border); color:var(--navy); padding:3px 8px; border-radius:5px; display:inline-block; margin:0 6px 6px 0;}
+  .doc-line{display:flex; align-items:center; gap:10px; font-size:12.5px; padding:8px 0; border-bottom:1px solid #F0F4F4;}
+  .doc-line:last-child{border-bottom:none;}
+  .doc-icon{width:26px;height:26px;border-radius:6px;background:var(--panel); border:1px solid var(--border); flex-shrink:0;}
+
+  /* white-label preview */
+  .wl-row{display:flex; gap:14px; flex-wrap:wrap;}
+  .wl-card{flex:1; min-width:130px; border:1px solid var(--border); border-radius:var(--r-md); padding:14px; background:#fff;}
+  .wl-card .dot-row{display:flex; gap:5px; margin-bottom:10px;}
+  .wl-card .sw{width:16px;height:16px;border-radius:5px;}
+  .wl-card .name{font-family:var(--serif); font-weight:600; font-size:13px; color:var(--navy);}
+  .wl-card .lang{font-size:10.5px; color:var(--muted); margin-top:2px;}
+
+  /* ---------- Persona tabs ---------- */
+  section.personas{background:var(--white); border-top:1px solid var(--border); border-bottom:1px solid var(--border);}
+  .tab-bar{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:32px;}
+  .tab-btn{
+    font-family:var(--sans); font-size:13.5px; font-weight:600; padding:10px 18px; border-radius:999px;
+    border:1.5px solid var(--border-soft); background:transparent; color:var(--muted); cursor:pointer; transition:all .15s ease;
+  }
+  .tab-btn.active{background:var(--navy); color:#fff; border-color:var(--navy);}
+  .persona-panel{display:none; background:var(--panel); border:1px solid var(--border); border-radius:var(--r-lg); padding:34px 38px;}
+  .persona-panel.active{display:grid; grid-template-columns:1fr 1fr; gap:36px; align-items:center;}
+  @media (max-width:800px){ .persona-panel.active{grid-template-columns:1fr;} }
+  .persona-panel h3{font-size:21px; margin-bottom:10px;}
+  .persona-panel p{color:var(--muted); font-size:14.5px;}
+  .persona-views{display:flex; gap:8px; margin-top:16px; flex-wrap:wrap;}
+  .view-chip{font-family:var(--mono); font-size:10.5px; background:#fff; border:1px solid var(--border); color:var(--navy); padding:4px 9px; border-radius:5px;}
+  .persona-quote{font-family:var(--serif); font-size:16.5px; color:var(--navy); line-height:1.5; font-style:italic;}
+
+  /* ---------- Why AI ---------- */
+  .why-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  @media (max-width:900px){ .why-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:620px){ .why-grid{grid-template-columns:1fr;} }
+  .why-card{background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:26px 24px;}
+  .why-icon{width:38px;height:38px;border-radius:10px; background:var(--panel); display:flex; align-items:center; justify-content:center; margin-bottom:16px;}
+  .why-card h4{font-family:var(--serif); font-size:16.5px; color:var(--navy); margin:0 0 8px; font-weight:600;}
+  .why-card p{font-size:13.5px; color:var(--muted); margin:0;}
+  #consistency .consistency-grid{display:grid; grid-template-columns:1fr .85fr; gap:56px; align-items:center;}
+  #consistency .consistency-cards{display:flex; flex-direction:column; gap:16px;}
+  @media (max-width:800px){ #consistency .consistency-grid{grid-template-columns:1fr;} }
+
+  /* ---------- Security ---------- */
+  section.security{background:var(--navy); color:#fff;}
+  section.security .section-head h2{color:#fff;}
+  section.security .section-head p{color:#B9D4DC;}
+  .sec-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
+  @media (max-width:900px){ .sec-grid{grid-template-columns:repeat(2,1fr);} }
+  .sec-card{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:var(--r-md); padding:20px; text-align:center;}
+  .sec-card svg{margin:0 auto 12px;}
+  .sec-card .t{font-weight:600; font-size:13.5px;}
+  .sec-card .d{font-size:11.5px; color:#B9D4DC; margin-top:5px;}
+
+  /* ---------- Final CTA ---------- */
+  section.cta-final{text-align:center;}
+  .cta-box{
+    background:linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    border-radius:var(--r-xl); padding:64px 40px; color:#fff; position:relative; overflow:hidden;
+  }
+  .cta-box::after{
+    content:""; position:absolute; width:420px; height:420px; border-radius:50%;
+    background:radial-gradient(circle, rgba(46,196,182,.28), transparent 70%); top:-160px; right:-120px;
+  }
+  .cta-box h2{color:#fff; font-size:30px; position:relative;}
+  .cta-box p{color:#BFDDE2; margin:14px 0 28px; font-size:15.5px; position:relative;}
+  .cta-box .hero-ctas{justify-content:center; position:relative;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--white); border-top:1px solid var(--border); padding:56px 0 30px;}
+  .foot-grid{display:grid; grid-template-columns:1.3fr 1fr 1fr 1fr; gap:48px; margin-bottom:44px;}
+  @media (max-width:900px){ .foot-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:640px){ .foot-grid{grid-template-columns:1fr;} }
+  .foot-col h5{font-size:11.5px; text-transform:uppercase; letter-spacing:.6px; color:var(--faint); margin:0 0 14px; font-weight:700;}
+  .foot-col a{display:block; font-size:13.5px; color:var(--muted); text-decoration:none; margin-bottom:9px;}
+  .foot-col a:hover{color:var(--navy);}
+  .foot-bottom{display:flex; justify-content:space-between; align-items:center; padding-top:24px; border-top:1px solid var(--border); font-size:12.5px; color:var(--faint); flex-wrap:wrap; gap:12px;}
+
+  ::selection{background:var(--teal); color:#fff;}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="site">
+  <div class="wrap nav-row">
+    <a href="index.html" class="logo">
+      <img src="/logo.png" alt="DealCase.ai" style="height:22px; width:auto;">
+    </a>
+    <nav class="links">
+      <a href="#product">Product</a>
+      <a href="#personas">Who it's for</a>
+      <a href="#why-ai">Why AI</a>
+      <a href="#security">Security</a>
+      <a href="guide-pillar-ai-automation-real-estate.html">Guides</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="https://app.dealcase.ai/login" class="btn btn-ghost">Log in</a>
+      <a href="#" class="btn btn-primary" onclick="openAccountModal(event)">Open Account</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">AI-native workspace for real estate teams</p>
+      <h1>Your portfolio, finally in one place — <em>with an AI that knows it.</em></h1>
+      <p class="sub">DealCase.ai is a shared workspace built for teams, not individuals — your assets, contacts and documents live in one place so the whole team can collaborate on them, track progress against deadlines, and produce consistent, on-brand reports instead of five versions of the same memo.</p>
+      <div class="hero-ctas">
+        <a href="#" class="btn btn-primary" onclick="openAccountModal(event)">Open Account</a>
+        <a href="#product" class="btn btn-ghost">See how it works ↓</a>
+      </div>
+      <div class="hero-note">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        EU-hosted · your data is never used to train third-party models
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="device-card">
+        <div class="device-topbar">
+          <span class="dot" style="background:#E2774C"></span>
+          <span class="dot" style="background:#B5803A"></span>
+          <span class="dot" style="background:#2EC4B6"></span>
+          <span class="device-title">Chat · 24 Fitzrovia Square, London</span>
+        </div>
+        <div class="device-body">
+          <div class="chat-line-user">Give me an investment summary for DC-0142, standard template.</div>
+          <div class="chat-line-ai">Here's the summary for <b>24 Fitzrovia Square, London</b> — generated from the appraisal, floor plan, EPC certificate and current lease.</div>
+          <div class="report-card">
+            <div class="report-head">
+              <div class="report-icon"></div>
+              <div class="t">Investment summary — DC-0142</div>
+            </div>
+            <div class="report-row"><div class="k">Valuation</div><div class="v">£1,240,000 (appraisal, Mar 2025)</div></div>
+            <div class="report-row"><div class="k">Tenancy</div><div class="v">Occupied · lease to Dec 2027 · £2,400/mo</div></div>
+            <div class="report-row"><div class="k">Flag</div><div class="v flag">EPC renewal due within 12 months</div></div>
+            <div class="report-foot">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a6 6 0 0 0-6 6c0 4 6 12 6 12s6-8 6-12a6 6 0 0 0-6-6z"/></svg>
+              Saved to Attachments / DC-0142
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="badge-float b1">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1F8A6D" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span><strong>EU</strong>-region hosting</span>
+      </div>
+      <div class="badge-float b2">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C6FE0" stroke-width="2"><path d="M9 12h6M9 16h6M4 3h16v18H4z"/></svg>
+        <span><strong>56</strong> structured asset fields</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="trust">
+  <div class="wrap trust-row">
+    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><b>EU-region</b>&nbsp;data residency</div>
+    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 3 7v6c0 5 4 9 9 9s9-4 9-9V7z"/></svg>Encrypted in transit &amp; at rest</div>
+    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 12l1.8 1.8L15 10"/></svg><b>Never</b>&nbsp;trains on your data</div>
+    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg>Full audit trail, every message</div>
+    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg><b>7</b>&nbsp;languages supported</div>
+  </div>
+</section>
+
+<!-- ============ CONSISTENCY / ENABLEMENT ============ -->
+<section id="consistency" style="padding-bottom:44px;">
+  <div class="wrap">
+    <div class="consistency-grid">
+      <div>
+        <p class="eyebrow">Team enablement</p>
+        <h2 style="font-size:32px; font-weight:700; letter-spacing:-.3px; line-height:1.22;">Same AI, same firm, same output — every time.</h2>
+        <p style="color:var(--muted); font-size:16px; margin-top:14px;">Ask two people to prompt an AI for an investment memo and you'll get two different documents — different structure, different tone, different level of detail. DealCase.ai standardizes both halves of that problem: what your team asks, and what comes back.</p>
+        <p style="font-size:15px; color:var(--muted); margin-top:14px;">The result isn't just faster output — it's output your IC, your compliance team, and your clients can trust looks the same no matter who produced it.</p>
+      </div>
+      <div class="consistency-cards">
+        <div class="why-card">
+          <div class="why-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F3D52" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg></div>
+          <h4>A shared prompt library</h4>
+          <p>Every case starts from built-in, editable prompts for what your team actually does — an asset summary, a DD pass, a partner briefing — one click to run, refined once and reused by everyone, instead of reinvented per person, per week.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F3D52" stroke-width="2"><path d="M9 12h6M9 16h6M4 3h16v18H4z"/></svg></div>
+          <h4>Templates that enforce your house format</h4>
+          <p>Upload your firm's actual memo, financial model, deck, or agreement template with tagged placeholders — DealCase.ai fills the data automatically and drafts the AI-authored sections in place. Same structure, same sections, same look, whether it's your newest analyst or your most senior one running it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRODUCT / FEATURES ============ -->
+<section id="product">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">The product</p>
+      <h2>Everything about a property, in the conversation about it.</h2>
+      <p>A structured relational core sits behind every chat — the difference between "upload a file and ask about it" and a system that actually knows your portfolio. Every chat, asset and report is shared across the team by default, so progress is trackable and every output follows the same house standard, not whoever drafted it that week.</p>
+    </div>
+
+    <!-- Feature 1: Asset portfolio -->
+    <div class="feature">
+      <div class="feature-text">
+        <div class="feature-num">Portfolio</div>
+        <h3>Every asset, with the fields that matter to your firm.</h3>
+        <p>A central register of every property you hold or track, with up to ~100 structured fields — identity, location, physical condition, ownership, financials, and lease terms. Start from a standard template or define your own; bulk import and export via Excel keeps it in sync with how your team already works.</p>
+      </div>
+      <div class="feature-visual">
+        <div class="fv-head"><span class="mono-id">ASSETS · 52 properties</span></div>
+        <div class="fv-body">
+          <table class="mini-table">
+            <thead><tr><th>ID</th><th>Property</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td class="mono-id">DC-0142</td><td>24 Fitzrovia Square, London</td><td><span class="pill pill-mgmt"><span class="d"></span>Under mgmt</span></td></tr>
+              <tr><td class="mono-id">DC-0098</td><td>14 Rue de Rivoli, Paris</td><td><span class="pill pill-sale"><span class="d"></span>For sale</span></td></tr>
+              <tr><td class="mono-id">DC-0211</td><td>Via Garibaldi 8, Milano</td><td><span class="pill pill-dd"><span class="d"></span>Due diligence</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 2: AI chat -->
+    <div class="feature rev">
+      <div class="feature-text">
+        <div class="feature-num">AI chat</div>
+        <h3>Ask your portfolio a question, get a grounded answer.</h3>
+        <p>Your assistant has your firm's actual asset and contact data as context — not generic web knowledge. Set an "About this firm" profile and behaviour instructions once (terminology, units, tone), and every answer comes back the way your team actually talks about deals.</p>
+      </div>
+      <div class="feature-visual">
+        <div class="fv-head"><span class="mono-id">Chat · Due diligence — DC-0211</span></div>
+        <div class="fv-body mini-chat">
+          <div class="u">Which leases in Milano expire in the next 6 months?</div>
+          <div class="a"><b>2 leases</b> at DC-0211 expire before December — unit 2 (Mar 2026) and unit 4 (Nov 2026). Want a renewal reminder drafted for both tenants?</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 3: Document generation -->
+    <div class="feature">
+      <div class="feature-text">
+        <div class="feature-num">Document generation</div>
+        <h3>Turn a static template into a one-click, always-current document.</h3>
+        <p>Upload a Word, PowerPoint, or Excel file with tag placeholders — the system fills them from real asset and contact data automatically. Placeholders like an AI-written paragraph are handed to the assistant, which drafts the narrative in your firm's own voice.</p>
+      </div>
+      <div class="feature-visual">
+        <div class="fv-head"><span class="mono-id">Templates · Tag dictionary</span></div>
+        <div class="fv-body">
+          <span class="tag-chip">[ASSET_NAME]</span><span class="tag-chip">[GROSS_AREA]</span><span class="tag-chip">[ANNUAL_RENT]</span><span class="tag-chip">[PURCHASE_PRICE]</span>
+          <span class="tag-chip">[AI: write a 3-paragraph investment summary]</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 4: Document intelligence -->
+    <div class="feature rev">
+      <div class="feature-text">
+        <div class="feature-num">Document intelligence</div>
+        <h3>Upload a lease, a scan, or a photo — it becomes readable instantly.</h3>
+        <p>PDF and Word text extraction, Excel cell values, and vision for images — the AI can read a floor plan or describe a property photo directly. No more manual copy-paste from a data room into a prompt.</p>
+      </div>
+      <div class="feature-visual">
+        <div class="fv-head"><span class="mono-id">Attachments · DC-0142</span></div>
+        <div class="fv-body">
+          <div class="doc-line"><div class="doc-icon"></div>Appraisal_2025.pdf <span class="mono-id" style="margin-left:auto;">Appraisal</span></div>
+          <div class="doc-line"><div class="doc-icon"></div>Floor_plan.pdf <span class="mono-id" style="margin-left:auto;">Floor plan</span></div>
+          <div class="doc-line"><div class="doc-icon"></div>EPC_Certificate.pdf <span class="mono-id" style="margin-left:auto;">EPC certificate</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 5: white-label / multi-tenant -->
+    <div class="feature">
+      <div class="feature-text">
+        <div class="feature-num">Multi-tenant</div>
+        <h3>Every firm gets its own isolated, white-labelled workspace.</h3>
+        <p>Full data isolation between tenants — your own asset fields, your own AI context, your own users and permissions. Run each client or fund as its own branded workspace, in its own language, from one platform.</p>
+      </div>
+      <div class="feature-visual">
+        <div class="fv-head"><span class="mono-id">Workspaces</span></div>
+        <div class="fv-body wl-row">
+          <div class="wl-card">
+            <div class="dot-row"><span class="sw" style="background:#0F3D52"></span><span class="sw" style="background:#2EC4B6"></span></div>
+            <div class="name">Atticus RE</div><div class="lang">EN · London</div>
+          </div>
+          <div class="wl-card">
+            <div class="dot-row"><span class="sw" style="background:#3D6A8C"></span><span class="sw" style="background:#B5803A"></span></div>
+            <div class="name">Fondo Milano</div><div class="lang">IT · Milano</div>
+          </div>
+          <div class="wl-card">
+            <div class="dot-row"><span class="sw" style="background:#7C6FE0"></span><span class="sw" style="background:#1F8A6D"></span></div>
+            <div class="name">Groupe Foncier</div><div class="lang">FR · Paris</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ PERSONAS ============ -->
+<section class="personas" id="personas">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Who it's for</p>
+      <h2>Built for the people who actually run a portfolio.</h2>
+      <p>Different roles, same workspace — DealCase.ai adapts to how each part of the team already works.</p>
+    </div>
+
+    <div class="tab-bar" id="tabBar">
+      <button class="tab-btn active" data-tab="0">Asset manager</button>
+      <button class="tab-btn" data-tab="1">Investment / deal team</button>
+      <button class="tab-btn" data-tab="2">Acquisitions analyst</button>
+      <button class="tab-btn" data-tab="3">Multi-fund firm</button>
+      <button class="tab-btn" data-tab="4">Non-English operations</button>
+    </div>
+
+    <div class="persona-panel active" data-panel="0">
+      <div>
+        <h3>See the whole portfolio, ask instead of hunting.</h3>
+        <p>Every asset with live, structured data in one register. Ask the AI portfolio-level questions — "which assets have leases expiring in the next 12 months?" — instead of digging through spreadsheets.</p>
+        <div class="persona-views"><span class="view-chip">Assets</span><span class="view-chip">Chat</span><span class="view-chip">Attachments</span></div>
+      </div>
+      <div class="persona-quote">"Which assets have leases expiring in the next 12 months?"</div>
+    </div>
+    <div class="persona-panel" data-panel="1">
+      <div>
+        <h3>Investment memos, drafted in minutes not hours.</h3>
+        <p>Generate memos, teasers and summaries automatically from asset data, with AI-written narrative sections — cutting document turnaround from hours to minutes.</p>
+        <div class="persona-views"><span class="view-chip">Templates</span><span class="view-chip">Contacts</span><span class="view-chip">Chat</span></div>
+      </div>
+      <div class="persona-quote">"Draft an investment summary for DC-0142 in our house format."</div>
+    </div>
+    <div class="persona-panel" data-panel="2">
+      <div>
+        <h3>Read the data room without reading every page.</h3>
+        <p>Upload leases, valuations and PDFs into a chat and ask the AI to extract and cross-check figures — instead of manually reading every document.</p>
+        <div class="persona-views"><span class="view-chip">Attachments</span><span class="view-chip">Chat</span></div>
+      </div>
+      <div class="persona-quote">"Cross-check the rent roll against the appraisal for DC-0211."</div>
+    </div>
+    <div class="persona-panel" data-panel="3">
+      <div>
+        <h3>One platform, one isolated workspace per client.</h3>
+        <p>Run each client or fund as its own branded tenant with its own fields and AI behaviour — from a single platform, with no data crossing between them.</p>
+        <div class="persona-views"><span class="view-chip">Admin panel</span><span class="view-chip">Templates</span></div>
+      </div>
+      <div class="persona-quote">"Onboard Fund III as its own workspace, same platform."</div>
+    </div>
+    <div class="persona-panel" data-panel="4">
+      <div>
+        <h3>Your terminology, your language, your units.</h3>
+        <p>Get the AI — and the whole interface — working in your firm's own language and local conventions: cap rate vs. rental yield, m² vs. sq ft, EN, IT, FR, ES, DE or PT.</p>
+        <div class="persona-views"><span class="view-chip">AI Context</span><span class="view-chip">Settings</span></div>
+      </div>
+      <div class="persona-quote">"Toujours répondre en français, et exprimer les surfaces en m²."</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ WHY AI ============ -->
+<section id="why-ai">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Why AI, why now</p>
+      <h2>Real estate runs on documents. AI was built to read them.</h2>
+      <p>The industry's expensive manual work — reading data rooms, producing memos, tracking deadlines — is exactly the work that's automatable, without removing human judgement from the loop.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F3D52" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h4>Grounded, not generic</h4>
+        <p>The AI answers from your firm's actual assets, contacts and documents — not general web knowledge.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F3D52" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+        <h4>Documents are the data</h4>
+        <p>Leases, scans, spreadsheets, even property photos — text extraction and vision mean the AI reads what you already have.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F3D52" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h4>Your firm's own vocabulary</h4>
+        <p>A cap-rate fund and a rental-yield fund shouldn't get the same answer — per-tenant AI context makes it match how you talk.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F3D52" stroke-width="2"><path d="M9 12h6M9 16h6M4 3h16v18H4z"/></svg></div>
+        <h4>Narrative + data, automated</h4>
+        <p>Memos and teasers are data plus narrative — the template engine automates the data, AI drafts the narrative, a human reviews.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F3D52" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-8"/></svg></div>
+        <h4>Always current, on demand</h4>
+        <p>A chat over live data means the "report" is generated fresh each time — never a PDF that was accurate the day it was exported.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F3D52" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <h4>Infrastructure you don't have to build</h4>
+        <p>Isolation, per-tenant context, and secure integrations are hard to build well — DealCase.ai gives you the benefit without the build.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECURITY ============ -->
+<section class="security" id="security">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Trust &amp; compliance</p>
+      <h2>Built for professional data, from the ground up.</h2>
+      <p>Data residency and handling commitments aren't an add-on here — they're structural.</p>
+    </div>
+    <div class="sec-grid">
+      <div class="sec-card">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2EC4B6" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <div class="t">EU-region hosting</div><div class="d">Inference and storage stay in the EU.</div>
+      </div>
+      <div class="sec-card">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2EC4B6" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 12l1.8 1.8L15 10"/></svg>
+        <div class="t">No training on your data</div><div class="d">Client inputs and outputs are excluded by default.</div>
+      </div>
+      <div class="sec-card">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2EC4B6" stroke-width="2"><path d="M12 2 3 7v6c0 5 4 9 9 9s9-4 9-9V7z"/></svg>
+        <div class="t">Encrypted, always</div><div class="d">TLS in transit, encryption at rest, for every document.</div>
+      </div>
+      <div class="sec-card">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2EC4B6" stroke-width="2"><path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg>
+        <div class="t">Full audit trail</div><div class="d">Every chat, message and AI output timestamped.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUIDES ============ -->
+<section id="guides" style="background:var(--white); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Free resources</p>
+      <h2>Practical AI &amp; automation recipes for asset managers.</h2>
+      <p>Five step-by-step recipes you can build this week with tools you already have — plus exactly where each one hits its limit at scale.</p>
+    </div>
+    <div class="recipe-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
+      <a href="guide-workflow-automation-scheduling.html" style="background:var(--panel); border:1px solid var(--border); border-radius:var(--r-lg); padding:22px 24px; text-decoration:none; display:block; transition:border-color .15s ease;" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-family:var(--mono); font-size:11px; color:var(--teal-deep); font-weight:700;">Recipe 1</div>
+        <h4 style="font-family:var(--serif); font-size:16px; color:var(--navy); margin:8px 0 6px;">Workflow Automation &amp; Scheduling</h4>
+        <p style="font-size:13px; color:var(--muted); margin:0;">Enforce process sequence without a human chasing it.</p>
+      </a>
+      <a href="guide-document-contract-automation.html" style="background:var(--panel); border:1px solid var(--border); border-radius:var(--r-lg); padding:22px 24px; text-decoration:none; display:block; transition:border-color .15s ease;" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-family:var(--mono); font-size:11px; color:var(--teal-deep); font-weight:700;">Recipe 2</div>
+        <h4 style="font-family:var(--serif); font-size:16px; color:var(--navy); margin:8px 0 6px;">Document &amp; Contract Automation</h4>
+        <p style="font-size:13px; color:var(--muted); margin:0;">Turn scattered PDFs into a queryable register.</p>
+      </a>
+      <a href="guide-lead-routing-automation.html" style="background:var(--panel); border:1px solid var(--border); border-radius:var(--r-lg); padding:22px 24px; text-decoration:none; display:block; transition:border-color .15s ease;" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-family:var(--mono); font-size:11px; color:var(--teal-deep); font-weight:700;">Recipe 3</div>
+        <h4 style="font-family:var(--serif); font-size:16px; color:var(--navy); margin:8px 0 6px;">Lead Management &amp; Distribution</h4>
+        <p style="font-size:13px; color:var(--muted); margin:0;">Route buyer requests within minutes, not days.</p>
+      </a>
+      <a href="guide-ai-report-generation.html" style="background:var(--panel); border:1px solid var(--border); border-radius:var(--r-lg); padding:22px 24px; text-decoration:none; display:block; transition:border-color .15s ease;" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-family:var(--mono); font-size:11px; color:var(--teal-deep); font-weight:700;">Recipe 4</div>
+        <h4 style="font-family:var(--serif); font-size:16px; color:var(--navy); margin:8px 0 6px;">AI-Generated Report Production</h4>
+        <p style="font-size:13px; color:var(--muted); margin:0;">Draft section-by-section, with gaps flagged not hidden.</p>
+      </a>
+      <a href="guide-partner-performance-tracking.html" style="background:var(--panel); border:1px solid var(--border); border-radius:var(--r-lg); padding:22px 24px; text-decoration:none; display:block; transition:border-color .15s ease;" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-family:var(--mono); font-size:11px; color:var(--teal-deep); font-weight:700;">Recipe 5</div>
+        <h4 style="font-family:var(--serif); font-size:16px; color:var(--navy); margin:8px 0 6px;">Partner Coordination &amp; Performance</h4>
+        <p style="font-size:13px; color:var(--muted); margin:0;">Track partner quality before it becomes a problem.</p>
+      </a>
+      <a href="guide-pillar-ai-automation-real-estate.html" style="background:var(--navy); border:1px solid var(--navy); border-radius:var(--r-lg); padding:22px 24px; text-decoration:none; display:flex; flex-direction:column; justify-content:center;">
+        <div style="font-family:var(--mono); font-size:11px; color:var(--teal); font-weight:700;">All 5 recipes</div>
+        <h4 style="font-family:var(--serif); font-size:16px; color:#fff; margin:8px 0 6px;">Read the full guide →</h4>
+        <p style="font-size:13px; color:#BFDDE2; margin:0;">Start here for the overview, implementation sequencing, and what's next.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="cta-final">
+  <div class="wrap">
+    <div class="cta-box">
+      <h2>Ready to see your portfolio differently?</h2>
+      <p>DealCase.ai is sales-assisted — we'll walk through your portfolio and data with you before anything goes live.</p>
+      <div class="hero-ctas">
+        <a href="#" class="btn btn-onteal" onclick="openAccountModal(event)">Open Account</a>
+        <a href="https://app.dealcase.ai/login" class="btn btn-ghost" style="border-color:rgba(255,255,255,.3); color:#fff;">Log in</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <a href="index.html" class="logo" style="margin-bottom:14px;">
+          <img src="/logo.png" alt="DealCase.ai" style="height:22px; width:auto;">
+        </a>
+        <p style="font-size:13px; color:var(--muted); max-width:240px; margin:0 0 14px;">The AI-native workspace built for real estate teams to share, track and produce consistent output. EU-hosted, sales-assisted.</p>
+        <a href="https://uk.linkedin.com/company/enerinvestltd" target="_blank" rel="noopener" aria-label="LinkedIn" style="display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:8px; border:1px solid var(--border-soft); color:var(--muted); transition:all .15s ease;" onmouseover="this.style.color='var(--navy)'; this.style.borderColor='var(--teal)'" onmouseout="this.style.color='var(--muted)'; this.style.borderColor='var(--border-soft)'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+        </a>
+      </div>
+      <div class="foot-col">
+        <h5>Product</h5>
+        <a href="#product">Portfolio management</a>
+        <a href="#product">AI chat</a>
+        <a href="#product">Document generation</a>
+        <a href="#security">Security</a>
+      </div>
+      <div class="foot-col">
+        <h5>Guides</h5>
+        <a href="guide-pillar-ai-automation-real-estate.html">All recipes</a>
+        <a href="guide-workflow-automation-scheduling.html">Workflow automation</a>
+        <a href="guide-document-contract-automation.html">Document &amp; contract automation</a>
+        <a href="guide-lead-routing-automation.html">Lead routing</a>
+        <a href="guide-ai-report-generation.html">Report generation</a>
+        <a href="guide-partner-performance-tracking.html">Partner performance</a>
+      </div>
+      <div class="foot-col">
+        <h5>Company</h5>
+        <p style="font-size:13.5px; color:var(--muted); line-height:1.6; margin:0 0 14px;">
+          Enerinvest (UK) Ltd.<br>
+          36-37 Albert Embankment<br>
+          London SE1 7TL
+        </p>
+        <a href="#" onclick="openAccountModal(event)">Contacts</a>
+        <a href="legal/privacy-policy.html">Privacy policy</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 DealCase.ai — a product of Enerinvest (UK) Ltd. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ OPEN ACCOUNT MODAL ============ -->
+<div id="openAccountOverlay" style="display:none; position:fixed; inset:0; background:rgba(11,42,56,.55); z-index:100; align-items:center; justify-content:center; padding:20px;" onclick="if(event.target===this) closeAccountModal()">
+  <div style="background:var(--white); border-radius:var(--r-xl); max-width:460px; width:100%; padding:36px 32px; position:relative; box-shadow:0 30px 80px -20px rgba(11,42,56,.4);">
+    <button onclick="closeAccountModal()" aria-label="Close" style="position:absolute; top:18px; right:18px; border:none; background:var(--panel); width:30px; height:30px; border-radius:8px; color:var(--muted); cursor:pointer; display:flex; align-items:center; justify-content:center;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <p class="eyebrow" style="margin-bottom:8px;">Open account</p>
+    <h2 style="font-size:23px; margin-bottom:10px;">Let's set your team up.</h2>
+    <p style="font-size:14px; color:var(--muted); margin-bottom:22px;">Tell us a little about your portfolio — someone from our team will personally reach out to walk you through setup.</p>
+    <!-- TODO before launch: this posts to a placeholder Formspree endpoint that is not connected to any real account. Replace with your own Formspree form ID (or another real destination) before going live. -->
+    <form action="https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID" method="POST" style="display:flex; flex-direction:column; gap:12px;">
+      <div style="display:flex; gap:12px;">
+        <input type="text" name="first_name" placeholder="Name" required style="flex:1; padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text);">
+        <input type="text" name="last_name" placeholder="Surname" required style="flex:1; padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text);">
+      </div>
+      <input type="email" name="email" placeholder="Work email" required style="padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text);">
+      <textarea name="message" placeholder="Tell us about your portfolio (size, location, what you'd like to solve first)" rows="4" style="padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text); resize:vertical;"></textarea>
+      <button type="submit" class="btn btn-primary" style="justify-content:center; margin-top:6px;">Send request</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openAccountModal(e){
+    if(e) e.preventDefault();
+    document.getElementById('openAccountOverlay').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeAccountModal(){
+    document.getElementById('openAccountOverlay').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  // Allow deep-linking from other pages, e.g. index.html#open-account
+  if(window.location.hash === '#open-account'){
+    window.addEventListener('DOMContentLoaded', () => openAccountModal());
+  }
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeAccountModal(); });
+</script>
+
+<script>
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.persona-panel');
+  tabBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      tabBtns.forEach(b=>b.classList.remove('active'));
+      panels.forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelector('.persona-panel[data-panel="'+btn.dataset.tab+'"]').classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

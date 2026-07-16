@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="/favicon.png">
+<title>Partner Performance Tracking for Real Estate Asset Managers: An AI Recipe | DealCase.ai</title>
+<meta name="description" content="A step-by-step recipe to track external partner performance systematically instead of after a problem surfaces — plus where it stops scaling.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700;8..60,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F3D52; --navy-dark:#0B2A38; --navy-hover:#0A2C3C;
+    --teal:#2EC4B6; --teal-deep:#1F8A6D;
+    --slate:#5B6FA8; --sand:#B5803A; --dusty:#3D6A8C; --violet:#7C6FE0; --orange:#E2774C; --red:#C0492B;
+    --bg:#F2F6F7; --panel:#F4FAFA; --white:#FFFFFF;
+    --border:#E8EEF0; --border-soft:#E2E9EB;
+    --text:#1B2A33; --muted:#5C7C8A; --faint:#A6B6BD;
+    --serif:'Source Serif 4', Georgia, serif;
+    --sans:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono:'IBM Plex Mono','SF Mono', Consolas, monospace;
+    --r-sm:8px; --r-md:12px; --r-lg:18px; --r-xl:26px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; font-family:var(--sans); color:var(--text); background:var(--bg); -webkit-font-smoothing:antialiased; line-height:1.6;}
+  a{color:inherit;}
+  .wrap{max-width:820px; margin:0 auto; padding:0 28px;}
+  .wrap-wide{max-width:1180px; margin:0 auto; padding:0 28px;}
+  h1,h2,h3,h4{font-family:var(--serif); color:var(--navy); margin:0;}
+  p{margin:0 0 16px;}
+  .btn{display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:14.5px; padding:12px 22px; border-radius:999px; border:1.5px solid transparent; cursor:pointer; text-decoration:none; transition:all .15s ease;}
+  .btn-primary{background:var(--navy); color:#fff;} .btn-primary:hover{background:var(--navy-hover);}
+  .btn-ghost{background:transparent; color:var(--navy); border-color:var(--border-soft);} .btn-ghost:hover{border-color:var(--teal); background:var(--panel);}
+
+  header.site{position:sticky; top:0; z-index:50; background:rgba(242,246,247,.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--border);}
+  .nav-row{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
+  .logo{display:flex; align-items:center; gap:9px; text-decoration:none;}
+  .logo-word{font-family:var(--serif); font-weight:700; font-size:19px; color:var(--navy);}
+  .logo-word span{color:var(--teal);}
+  nav.links{display:flex; align-items:center; gap:28px;}
+  nav.links a{font-size:14px; font-weight:500; color:var(--muted); text-decoration:none;}
+  nav.links a:hover, nav.links a.active{color:var(--navy);}
+  .nav-actions{display:flex; align-items:center; gap:12px;}
+  @media (max-width:900px){ nav.links{display:none;} }
+
+  .breadcrumb{font-family:var(--mono); font-size:12px; color:var(--muted); padding:22px 0 0;}
+  .breadcrumb a{color:var(--teal-deep); text-decoration:none;}
+  .breadcrumb a:hover{text-decoration:underline;}
+
+  .art-head{padding:22px 0 40px; border-bottom:1px solid var(--border); margin-bottom:44px;}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:var(--teal-deep); margin:0 0 14px;}
+  .art-head h1{font-size:34px; line-height:1.2; font-weight:700; letter-spacing:-.4px; margin-bottom:16px;}
+  .art-head .sub{font-size:17px; color:var(--muted); max-width:620px;}
+  .meta-row{display:flex; gap:18px; margin-top:20px; font-size:12.5px; color:var(--faint); font-family:var(--mono);}
+
+  section{margin-bottom:46px;}
+  h2{font-size:24px; font-weight:700; margin-bottom:16px; letter-spacing:-.2px;}
+  h3{font-size:17.5px; font-weight:600; margin:24px 0 10px; color:var(--navy);}
+  .step-num{display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:7px; background:var(--navy); color:#fff; font-family:var(--mono); font-size:12px; font-weight:700; margin-right:8px; flex-shrink:0;}
+  .lede{font-size:17px; color:var(--text);}
+  ul, ol{padding-left:22px; margin:0 0 16px;}
+  li{margin-bottom:8px;}
+
+  .prompt-box{background:var(--navy); color:#fff; border-radius:var(--r-md); padding:22px 24px; margin:20px 0; font-family:var(--mono); font-size:13.5px; line-height:1.65;}
+  .prompt-box .lbl{font-family:var(--sans); font-weight:700; font-size:11.5px; text-transform:uppercase; letter-spacing:.6px; color:var(--teal); margin-bottom:12px; display:block;}
+
+  .callout{border-radius:var(--r-md); padding:18px 22px; margin:22px 0; font-size:14.5px;}
+  .callout-limit{background:#FFF1EA; border:1px solid #FBDCC8;}
+  .callout-limit .lbl{font-weight:700; color:var(--orange); font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; display:block;}
+  .callout-build{background:var(--panel); border:1px solid var(--border); font-family:var(--mono); font-size:12.5px; color:var(--muted);}
+  .callout-cta{background:var(--panel); border:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .callout-cta .txt{font-size:14.5px; color:var(--text);}
+  .callout-cta .txt b{color:var(--navy);}
+  .callout-cta a{white-space:nowrap;}
+
+  .faq-item{margin-bottom:20px;}
+
+  .sibling-nav{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:8px;}
+  @media (max-width:600px){ .sibling-nav{grid-template-columns:1fr;} }
+  .sibling-card{background:var(--white); border:1px solid var(--border); border-radius:var(--r-md); padding:18px 20px; text-decoration:none; transition:border-color .15s ease;}
+  .sibling-card:hover{border-color:var(--teal);}
+  .sibling-card .dir{font-family:var(--mono); font-size:10.5px; color:var(--faint); text-transform:uppercase; letter-spacing:.5px;}
+  .sibling-card .t{font-size:14.5px; font-weight:600; color:var(--navy); margin-top:4px;}
+
+  footer{background:var(--white); border-top:1px solid var(--border); padding:44px 0 30px; margin-top:60px;}
+  .foot-bottom{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:12.5px; color:var(--faint); font-family:var(--mono);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap-wide nav-row">
+    <a href="index.html" class="logo">
+      <img src="/logo.png" alt="DealCase.ai" style="height:20px; width:auto;">
+    </a>
+    <nav class="links">
+      <a href="index.html#product">Product</a>
+      <a href="index.html#personas">Who it's for</a>
+      <a href="index.html#why-ai">Why AI</a>
+      <a href="guide-pillar-ai-automation-real-estate.html" class="active">Guides</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="https://app.dealcase.ai/login" class="btn btn-ghost">Log in</a>
+      <a href="index.html#open-account" class="btn btn-primary">Open Account</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="breadcrumb"><a href="guide-pillar-ai-automation-real-estate.html">Guides</a> / <a href="guide-pillar-ai-automation-real-estate.html">AI &amp; Automation</a> / Partner Coordination &amp; Performance</div>
+
+  <div class="art-head">
+    <p class="eyebrow">Recipe 5 of 5 · partner performance</p>
+    <h1>Partner Performance Tracking for Real Estate Asset Managers: An AI Recipe</h1>
+    <p class="sub">The common failure mode isn't that partners perform badly — it's that performance data isn't collected systematically, so conversations about quality happen only after a problem has already surfaced.</p>
+    <div class="meta-row"><span>6 min read</span><span>By the DealCase.ai team</span></div>
+  </div>
+
+  <section>
+    <p class="lede">Institutional asset management depends on a network of external partners — technical inspectors, legal advisors, brokers, facility managers — each touching a subset of the portfolio. Building a lightweight, ongoing register of how each partner performs turns those conversations from reactive to structured, and gives you a factual basis when it's time to increase volume with a partner, flag one for review, or make no change at all.</p>
+  </section>
+
+  <section>
+    <h2>The recipe: a partner performance register</h2>
+
+    <h3><span class="step-num">1</span>Build the task completion register</h3>
+    <p>Extend your task scheduling sheet with four columns: Date Partner Accepted, Partner Committed Date, Date Completed, Completion Within SLA (Yes/No). Log these values for every task that closes.</p>
+
+    <h3><span class="step-num">2</span>Automate the acceptance timestamp</h3>
+    <p>When you send the briefing email, add a link to a simple Typeform the partner clicks to confirm acceptance. The click timestamp is written automatically to the register.</p>
+
+    <h3><span class="step-num">3</span>Build the performance summary</h3>
+    <p>Add a summary tab that aggregates by Partner Firm: total tasks assigned, completed on time, completed late, average days overdue. Use COUNTIFS formulas — this updates automatically as new rows are added.</p>
+
+    <h3><span class="step-num">4</span>Monthly briefing with AI</h3>
+    <div class="prompt-box">
+      <span class="lbl">Prompt template — partner performance summary</span>
+      You are an asset manager reviewing partner performance for the month. Based on the following data [paste table], write a concise performance summary for each firm. Note: whether their on-time rate is improving, declining, or stable; any patterns in the types of tasks most frequently late; and a one-sentence recommended action (increase volume, flag for review, or no change).
+    </div>
+
+    <h3><span class="step-num">5</span>Partner review</h3>
+    <p>Use the AI-generated performance summary as the basis for a structured monthly partner review meeting. Share relevant sections with each partner firm as part of a feedback loop to drive continuous improvement.</p>
+
+    <div class="callout callout-build">Build time: 3–4 hours. The ongoing cost is ensuring the register is updated consistently after each task closes.</div>
+
+    <div class="callout callout-limit">
+      <span class="lbl">Where the DIY approach reaches its limit</span>
+      This recipe is only as good as manual discipline in keeping the register current — and it still produces its own isolated output, disconnected from scheduling and document data. Answering "which partners are underperforming across my entire portfolio right now" requires manually cross-referencing several sheets, which in practice happens only occasionally rather than continuously.
+    </div>
+  </section>
+
+  <section>
+    <div class="callout callout-cta">
+      <span class="txt">DealCase.ai links every partner to the assets, tasks and documents they touch automatically — <b>performance data accumulates as a byproduct of normal work</b>, not a separate register someone has to maintain.</span>
+      <a href="index.html#product" class="btn btn-primary">See how →</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>FAQ</h2>
+    <div class="faq-item">
+      <h3>How do you track real estate partner performance without dedicated software?</h3>
+      <p>A shared register logging acceptance date, committed date, completion date and SLA status per task, aggregated by partner with simple formulas, covers the basics well. The gap is that it stays a separate spreadsheet, disconnected from the scheduling and document systems that generated the underlying tasks.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Can AI summarize vendor or partner performance data?</h3>
+      <p>Yes — pasting an aggregated table into a prompt asking for on-time-rate trend, late-task patterns, and a one-sentence recommendation per firm works well and turns a raw table into something usable in a review meeting with minimal manual effort.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Continue the series</h2>
+    <div class="sibling-nav">
+      <a href="guide-lead-routing-automation.html" class="sibling-card">
+        <div class="dir">Recipe 3</div>
+        <div class="t">← Lead Management &amp; Distribution</div>
+      </a>
+      <a href="guide-ai-report-generation.html" class="sibling-card">
+        <div class="dir">Recipe 4</div>
+        <div class="t">← AI-Generated Report Production</div>
+      </a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap-wide foot-bottom">
+    <span>© 2026 DealCase.ai. All rights reserved.</span>
+    <span><a href="guide-pillar-ai-automation-real-estate.html" style="color:var(--muted); text-decoration:none;">← Back to all guides</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

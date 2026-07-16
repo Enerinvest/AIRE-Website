@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="/favicon.png">
+<title>Real Estate Document & Contract Automation: A Step-by-Step AI Recipe | DealCase.ai</title>
+<meta name="description" content="How to turn scattered leases and contracts into a queryable register using AI-assisted clause extraction — plus where access control becomes the real limit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700;8..60,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F3D52; --navy-dark:#0B2A38; --navy-hover:#0A2C3C;
+    --teal:#2EC4B6; --teal-deep:#1F8A6D;
+    --slate:#5B6FA8; --sand:#B5803A; --dusty:#3D6A8C; --violet:#7C6FE0; --orange:#E2774C; --red:#C0492B;
+    --bg:#F2F6F7; --panel:#F4FAFA; --white:#FFFFFF;
+    --border:#E8EEF0; --border-soft:#E2E9EB;
+    --text:#1B2A33; --muted:#5C7C8A; --faint:#A6B6BD;
+    --serif:'Source Serif 4', Georgia, serif;
+    --sans:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono:'IBM Plex Mono','SF Mono', Consolas, monospace;
+    --r-sm:8px; --r-md:12px; --r-lg:18px; --r-xl:26px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; font-family:var(--sans); color:var(--text); background:var(--bg); -webkit-font-smoothing:antialiased; line-height:1.6;}
+  a{color:inherit;}
+  .wrap{max-width:820px; margin:0 auto; padding:0 28px;}
+  .wrap-wide{max-width:1180px; margin:0 auto; padding:0 28px;}
+  h1,h2,h3,h4{font-family:var(--serif); color:var(--navy); margin:0;}
+  p{margin:0 0 16px;}
+  .btn{display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:14.5px; padding:12px 22px; border-radius:999px; border:1.5px solid transparent; cursor:pointer; text-decoration:none; transition:all .15s ease;}
+  .btn-primary{background:var(--navy); color:#fff;} .btn-primary:hover{background:var(--navy-hover);}
+  .btn-ghost{background:transparent; color:var(--navy); border-color:var(--border-soft);} .btn-ghost:hover{border-color:var(--teal); background:var(--panel);}
+
+  header.site{position:sticky; top:0; z-index:50; background:rgba(242,246,247,.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--border);}
+  .nav-row{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
+  .logo{display:flex; align-items:center; gap:9px; text-decoration:none;}
+  .logo-word{font-family:var(--serif); font-weight:700; font-size:19px; color:var(--navy);}
+  .logo-word span{color:var(--teal);}
+  nav.links{display:flex; align-items:center; gap:28px;}
+  nav.links a{font-size:14px; font-weight:500; color:var(--muted); text-decoration:none;}
+  nav.links a:hover, nav.links a.active{color:var(--navy);}
+  .nav-actions{display:flex; align-items:center; gap:12px;}
+  @media (max-width:900px){ nav.links{display:none;} }
+
+  .breadcrumb{font-family:var(--mono); font-size:12px; color:var(--muted); padding:22px 0 0;}
+  .breadcrumb a{color:var(--teal-deep); text-decoration:none;}
+  .breadcrumb a:hover{text-decoration:underline;}
+
+  .art-head{padding:22px 0 40px; border-bottom:1px solid var(--border); margin-bottom:44px;}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:var(--teal-deep); margin:0 0 14px;}
+  .art-head h1{font-size:34px; line-height:1.2; font-weight:700; letter-spacing:-.4px; margin-bottom:16px;}
+  .art-head .sub{font-size:17px; color:var(--muted); max-width:620px;}
+  .meta-row{display:flex; gap:18px; margin-top:20px; font-size:12.5px; color:var(--faint); font-family:var(--mono);}
+
+  section{margin-bottom:46px;}
+  h2{font-size:24px; font-weight:700; margin-bottom:16px; letter-spacing:-.2px;}
+  h3{font-size:17.5px; font-weight:600; margin:24px 0 10px; color:var(--navy);}
+  .step-num{display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:7px; background:var(--navy); color:#fff; font-family:var(--mono); font-size:12px; font-weight:700; margin-right:8px; flex-shrink:0;}
+  .lede{font-size:17px; color:var(--text);}
+  ul, ol{padding-left:22px; margin:0 0 16px;}
+  li{margin-bottom:8px;}
+
+  .prompt-box{background:var(--navy); color:#fff; border-radius:var(--r-md); padding:22px 24px; margin:20px 0; font-family:var(--mono); font-size:13.5px; line-height:1.65;}
+  .prompt-box .lbl{font-family:var(--sans); font-weight:700; font-size:11.5px; text-transform:uppercase; letter-spacing:.6px; color:var(--teal); margin-bottom:12px; display:block;}
+
+  .callout{border-radius:var(--r-md); padding:18px 22px; margin:22px 0; font-size:14.5px;}
+  .callout-limit{background:#FFF1EA; border:1px solid #FBDCC8;}
+  .callout-limit .lbl{font-weight:700; color:var(--orange); font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; display:block;}
+  .callout-build{background:var(--panel); border:1px solid var(--border); font-family:var(--mono); font-size:12.5px; color:var(--muted);}
+  .callout-cta{background:var(--panel); border:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .callout-cta .txt{font-size:14.5px; color:var(--text);}
+  .callout-cta .txt b{color:var(--navy);}
+  .callout-cta a{white-space:nowrap;}
+
+  .faq-item{margin-bottom:20px;}
+
+  .sibling-nav{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:8px;}
+  @media (max-width:600px){ .sibling-nav{grid-template-columns:1fr;} }
+  .sibling-card{background:var(--white); border:1px solid var(--border); border-radius:var(--r-md); padding:18px 20px; text-decoration:none; transition:border-color .15s ease;}
+  .sibling-card:hover{border-color:var(--teal);}
+  .sibling-card .dir{font-family:var(--mono); font-size:10.5px; color:var(--faint); text-transform:uppercase; letter-spacing:.5px;}
+  .sibling-card .t{font-size:14.5px; font-weight:600; color:var(--navy); margin-top:4px;}
+
+  footer{background:var(--white); border-top:1px solid var(--border); padding:44px 0 30px; margin-top:60px;}
+  .foot-bottom{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:12.5px; color:var(--faint); font-family:var(--mono);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap-wide nav-row">
+    <a href="index.html" class="logo">
+      <img src="/logo.png" alt="DealCase.ai" style="height:20px; width:auto;">
+    </a>
+    <nav class="links">
+      <a href="index.html#product">Product</a>
+      <a href="index.html#personas">Who it's for</a>
+      <a href="index.html#why-ai">Why AI</a>
+      <a href="guide-pillar-ai-automation-real-estate.html" class="active">Guides</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="https://app.dealcase.ai/login" class="btn btn-ghost">Log in</a>
+      <a href="index.html#open-account" class="btn btn-primary">Open Account</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="breadcrumb"><a href="guide-pillar-ai-automation-real-estate.html">Guides</a> / <a href="guide-pillar-ai-automation-real-estate.html">AI &amp; Automation</a> / Document &amp; Contract Automation</div>
+
+  <div class="art-head">
+    <p class="eyebrow">Recipe 2 of 5 · document intelligence</p>
+    <h1>Real Estate Document &amp; Contract Automation: A Step-by-Step AI Recipe</h1>
+    <p class="sub">You can automate real estate contract clause extraction today using Claude or ChatGPT and a Google Sheet. Here's the exact build, and where it stops working at scale.</p>
+    <div class="meta-row"><span>8 min read</span><span>By the DealCase.ai team</span></div>
+  </div>
+
+  <section>
+    <p class="lede">Document-heavy processes share a common failure mode: the information exists but isn't findable when needed. Appraisals sit in email attachments. Lease terms live in a PDF five people have saved in five different folders. The contract deadline everyone missed was recorded somewhere — a note field, a spreadsheet, an email chain — but not in a place where a system could fetch it automatically.</p>
+    <p>The automation opportunity here isn't primarily about AI reading documents. It's about getting documents into a structure where they can be acted on and shared across a team. Once that structure exists, AI accelerates the review and drafting layers on top of it.</p>
+  </section>
+
+  <section>
+    <h2>The recipe: structured document handling with AI review</h2>
+
+    <h3><span class="step-num">1</span>Establish a document database structure</h3>
+    <p>In a Google Sheet, create a table with columns: Asset ID, Asset Name, File Name, Document Type, Document Date, Document Author, Closing Date, Deposit Amount, Payment Date, Suspensive Conditions, Suspensive Deadline, Penalties, Other Conditions.</p>
+
+    <h3><span class="step-num">2</span>AI-assisted clause extraction</h3>
+    <p>For any contract or lease that needs reviewing, paste the relevant sections into Claude or ChatGPT with the prompt below.</p>
+    <div class="prompt-box">
+      <span class="lbl">Prompt template — contract clause extraction</span>
+      You are reviewing a real estate contract on behalf of an institutional asset manager. Extract the following fields and return them as a structured list: (1) Closing date, (2) Deposit amount and payment date, (3) Suspensive conditions and their deadlines, (4) Penalties for late completion, (5) Any conditions that give either party a right of withdrawal. If a field is not present, say 'not specified'.
+    </div>
+    <p>Paste the output into the Google Sheet document database. This gives you a queryable register of contract terms rather than a folder of PDFs.</p>
+
+    <h3><span class="step-num">3</span>Populate the contract register</h3>
+    <p>Review the AI-extracted clauses and confirm accuracy before populating the sheet. This step ensures the register reflects verified data, not raw AI output.</p>
+
+    <h3><span class="step-num">4</span>Automated deadline alerts</h3>
+    <p>In n8n, build a daily workflow that reads your contract terms sheet and checks for closing dates or suspensive condition deadlines falling within the next 30 days. When found, it sends a summary to the responsible manager.</p>
+
+    <h3><span class="step-num">5</span>Draft population</h3>
+    <p>Use Make or Zapier to pull confirmed contract data from your register and populate draft document templates automatically, reducing manual data entry at the drafting stage.</p>
+
+    <div class="callout callout-build">Build time: 4–6 hours. Step 1 may take longer depending on the current state of your file structure.</div>
+
+    <div class="callout callout-limit">
+      <span class="lbl">Where the DIY approach reaches its limit</span>
+      The practical limit is access control. A Google Sheet containing contract terms and a shared Drive folder don't support the granular permissions institutional operations require — some users should see their briefings but not the contract register; auditors need read-only access to a defined document set. A robust set of permission and logical access rules may require a dedicated platform.
+    </div>
+  </section>
+
+  <section>
+    <div class="callout callout-cta">
+      <span class="txt">DealCase.ai reads leases, scans and appraisals natively — text extraction and vision, no manual copy-paste — with <b>row-level tenant isolation and field-level access control</b> built in, not layered on top of a spreadsheet.</span>
+      <a href="index.html#product" class="btn btn-primary">See how →</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>FAQ</h2>
+    <div class="faq-item">
+      <h3>Can ChatGPT or Claude read real estate contracts accurately?</h3>
+      <p>Yes, for extraction of well-defined fields — closing dates, deposit amounts, suspensive conditions — when you paste the relevant sections directly and ask for a structured list. Accuracy drops if you paste an entire multi-document bundle at once; work contract-by-contract and always have a human confirm the extracted values before they enter your register.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How do you extract lease terms with AI at scale?</h3>
+      <p>The same clause-extraction prompt works per document, but doing it across dozens or hundreds of leases individually is where a manual DIY workflow becomes the bottleneck — not the AI's accuracy, but the lack of a queryable, permissioned register behind it.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What's the real limit of a Google Sheet contract register?</h3>
+      <p>Access control, not scale. A shared spreadsheet has no field-level permissions — anyone with edit access sees every contract term, deposit amount and buyer detail, which doesn't satisfy institutional audit or segregation requirements.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Continue the series</h2>
+    <div class="sibling-nav">
+      <a href="guide-workflow-automation-scheduling.html" class="sibling-card">
+        <div class="dir">Recipe 1</div>
+        <div class="t">← Workflow Automation &amp; Scheduling</div>
+      </a>
+      <a href="guide-ai-report-generation.html" class="sibling-card">
+        <div class="dir">Recipe 4</div>
+        <div class="t">AI-Generated Report Production →</div>
+      </a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap-wide foot-bottom">
+    <span>© 2026 DealCase.ai. All rights reserved.</span>
+    <span><a href="guide-pillar-ai-automation-real-estate.html" style="color:var(--muted); text-decoration:none;">← Back to all guides</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
