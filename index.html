@@ -53,7 +53,7 @@
     position:sticky; top:0; z-index:50; background:var(--white);
     border-bottom:1px solid var(--border);
   }
-  .nav-row{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
+  .nav-row{display:flex; align-items:center; justify-content:space-between; padding-top:16px; padding-bottom:16px; flex-wrap:wrap; row-gap:10px;}
   .logo{display:flex; align-items:center; gap:9px; text-decoration:none;}
   .logo-word{font-family:var(--serif); font-weight:700; font-size:20px; color:var(--navy); letter-spacing:.1px;}
   .logo-word span{color:var(--teal);}
@@ -71,7 +71,10 @@
     }
     nav.links.open{display:flex;}
     nav.links a{padding:12px 0; border-bottom:1px solid var(--border-soft);}
-    .nav-toggle{display:flex;}
+    .logo{order:1;}
+    .nav-toggle{display:flex; order:2;}
+    .nav-actions{order:3; flex-basis:100%; gap:10px;}
+    .nav-actions .btn{flex:1; justify-content:center;}
   }
 
   /* ---------- Hero ---------- */
@@ -271,12 +274,12 @@
       <a href="#security">Security</a>
       <a href="guide-pillar-ai-automation-real-estate.html">Guides</a>
     </nav>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" onclick="toggleNavMenu(this)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
     <div class="nav-actions">
       <a href="https://app.dealcase.ai/login" class="btn btn-ghost">Log in</a>
       <a href="#" class="btn btn-primary" onclick="openAccountModal(event)">Open Account</a>
-      <button class="nav-toggle" aria-label="Menu" aria-expanded="false" onclick="toggleNavMenu(this)">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
     </div>
   </div>
 </header>
@@ -287,7 +290,7 @@
     <div>
       <p class="eyebrow">AI-native workspace for real estate teams</p>
       <h1>Your portfolio, finally in one place — <em>with an AI that knows it.</em></h1>
-      <p class="sub">DealCase.ai is a shared workspace built for teams, not individuals — your assets, contacts and documents live in one place so the whole team can collaborate on them, track progress against deadlines, and produce consistent, on-brand reports instead of five versions of the same memo.</p>
+      <p class="sub">DealCase.ai is a shared workspace built for teams — your assets, contacts and documents live in one place so the whole team can collaborate on them, maintain a shared repository, and produce consistent, on-brand reports instead of five versions of the same memo.</p>
       <div class="hero-ctas">
         <a href="#" class="btn btn-primary" onclick="openAccountModal(event)">Open Account</a>
         <a href="#product" class="btn btn-ghost">See how it works ↓</a>
@@ -339,11 +342,11 @@
 <!-- ============ TRUST STRIP ============ -->
 <section class="trust">
   <div class="wrap trust-row">
-    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><b>EU-region</b>&nbsp;data residency</div>
-    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 3 7v6c0 5 4 9 9 9s9-4 9-9V7z"/></svg>Encrypted in transit &amp; at rest</div>
-    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 12l1.8 1.8L15 10"/></svg><b>Never</b>&nbsp;trains on your data</div>
-    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg>Full audit trail, every message</div>
-    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg><b>7</b>&nbsp;languages supported</div>
+    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><b>EU-region</b> data residency</div>
+    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 3 7v6c0 5 4 9 9 9s9-4 9-9V7z"/></svg><b>Encrypted</b> in transit &amp; at rest</div>
+    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 12l1.8 1.8L15 10"/></svg><b>Never</b> trains on your data</div>
+    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg><b>Full audit trail</b>, every message</div>
+    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg><b>7</b> languages supported</div>
   </div>
 </section>
 
@@ -728,18 +731,28 @@
     <button onclick="closeAccountModal()" aria-label="Close" style="position:absolute; top:18px; right:18px; border:none; background:var(--panel); width:30px; height:30px; border-radius:8px; color:var(--muted); cursor:pointer; display:flex; align-items:center; justify-content:center;">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
-    <p class="eyebrow" style="margin-bottom:8px;">Open account</p>
-    <h2 style="font-size:23px; margin-bottom:10px;">Let's set your team up.</h2>
-    <p style="font-size:14px; color:var(--muted); margin-bottom:22px;">Tell us a little about your portfolio — someone from our team will personally reach out to walk you through setup.</p>
-    <form action="https://formspree.io/f/mjgnybgl" method="POST" style="display:flex; flex-direction:column; gap:12px;">
-      <div style="display:flex; gap:12px;">
-        <input type="text" name="first_name" placeholder="Name" required style="flex:1; min-width:0; padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text);">
-        <input type="text" name="last_name" placeholder="Surname" required style="flex:1; min-width:0; padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text);">
+    <div id="openAccountBody">
+      <p class="eyebrow" style="margin-bottom:8px;">Open account</p>
+      <h2 style="font-size:23px; margin-bottom:10px;">Let's set your team up.</h2>
+      <p style="font-size:14px; color:var(--muted); margin-bottom:22px;">Tell us a little about your portfolio — someone from our team will personally reach out to walk you through setup.</p>
+      <form id="openAccountForm" action="https://formspree.io/f/mjgnybgl" method="POST" style="display:flex; flex-direction:column; gap:12px;">
+        <div style="display:flex; gap:12px;">
+          <input type="text" name="first_name" placeholder="Name" required style="flex:1; min-width:0; padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text);">
+          <input type="text" name="last_name" placeholder="Surname" required style="flex:1; min-width:0; padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text);">
+        </div>
+        <input type="email" name="email" placeholder="Work email" required style="padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text);">
+        <textarea name="message" placeholder="Tell us about your portfolio (size, location, what you'd like to solve first)" rows="4" style="padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text); resize:vertical;"></textarea>
+        <button type="submit" class="btn btn-primary" style="justify-content:center; margin-top:6px;">Send request</button>
+        <p id="openAccountError" style="display:none; font-size:13px; color:var(--red); margin:0;">Something went wrong sending your request — please try again, or email us directly.</p>
+      </form>
+    </div>
+    <div id="openAccountSuccess" style="display:none; text-align:center; padding:8px 0 4px;">
+      <div style="width:48px; height:48px; border-radius:50%; background:#EAF6F6; display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F8A6D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
       </div>
-      <input type="email" name="email" placeholder="Work email" required style="padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text);">
-      <textarea name="message" placeholder="Tell us about your portfolio (size, location, what you'd like to solve first)" rows="4" style="padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--r-md); font-family:var(--sans); font-size:14px; color:var(--text); resize:vertical;"></textarea>
-      <button type="submit" class="btn btn-primary" style="justify-content:center; margin-top:6px;">Send request</button>
-    </form>
+      <h2 style="font-size:20px; margin-bottom:8px;">Request sent.</h2>
+      <p style="font-size:14px; color:var(--muted); margin:0;">Thanks — someone from our team will be in touch shortly to walk you through setup.</p>
+    </div>
   </div>
 </div>
 
@@ -748,6 +761,14 @@
     if(e) e.preventDefault();
     document.getElementById('openAccountOverlay').style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    document.getElementById('openAccountBody').style.display = '';
+    document.getElementById('openAccountSuccess').style.display = 'none';
+    document.getElementById('openAccountError').style.display = 'none';
+    const form = document.getElementById('openAccountForm');
+    form.reset();
+    const submitBtn = form.querySelector('button[type=submit]');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send request';
   }
   function closeAccountModal(){
     document.getElementById('openAccountOverlay').style.display = 'none';
@@ -758,6 +779,31 @@
     window.addEventListener('DOMContentLoaded', () => openAccountModal());
   }
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeAccountModal(); });
+
+  // Submit the Open Account form via fetch so the visitor never leaves the site
+  // for Formspree's own hosted "thanks" page.
+  document.getElementById('openAccountForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const form = e.target;
+    const errorMsg = document.getElementById('openAccountError');
+    const submitBtn = form.querySelector('button[type=submit]');
+    errorMsg.style.display = 'none';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (!response.ok) throw new Error('Request failed');
+      document.getElementById('openAccountBody').style.display = 'none';
+      document.getElementById('openAccountSuccess').style.display = 'block';
+    }).catch(() => {
+      errorMsg.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send request';
+    });
+  });
 
   function toggleNavMenu(btn){
     const nav = document.querySelector('nav.links');
