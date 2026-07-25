@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="/favicon.png">
+<title>DealCase.ai — Real estate, AI native</title>
+<meta name="description" content="See DealCase.ai running on a live account — assets, contacts, templates, and an AI assistant that already knows your data. Get instant demo access, no call required.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F3D52;
+    --navy-deep: #08283A;
+    --teal: #2EC4B6;
+    --teal-deep: #17998C;
+    --ice: #EAF6F6;
+    --slate: #5C7C8A;
+    --bg: #FBFAF6;
+    --white: #FFFFFF;
+    --text: #14232B;
+    --muted: #62777F;
+    --border: #E4E6DE;
+    --warn-bg: #FFF1EA;
+    --warn-text: #B5512E;
+    --live: #1E9E64;
+    --live-bg: #E7F6ED;
+    --dd-bg: #F1F0FA;
+    --dd-text: #4B3F8C;
+
+    --serif: 'Source Serif 4', Georgia, serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    color: var(--text);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; }
+  img { max-width: 100%; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 0; gap: 16px; flex-wrap: wrap;
+  }
+  .nav .logo { display: flex; align-items: center; }
+  .nav .cta-small {
+    font-family: var(--sans); font-weight: 600; font-size: 13.5px;
+    color: var(--navy); border: 1px solid var(--border); background: var(--white);
+    padding: 9px 16px; border-radius: 999px; text-decoration: none;
+    transition: border-color .15s ease, color .15s ease;
+    white-space: nowrap;
+  }
+  .nav .cta-small:hover { border-color: var(--teal); color: var(--teal-deep); }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 44px 0 30px; }
+  .hero-grid {
+    display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 52px; align-items: center;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: .03em;
+    color: var(--teal-deep); background: var(--ice); border-radius: 999px;
+    padding: 6px 14px; margin-bottom: 22px;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
+
+  h1 {
+    font-family: var(--serif); font-weight: 600; letter-spacing: -0.01em;
+    font-size: clamp(32px, 4vw, 50px); line-height: 1.08; margin: 0 0 20px;
+    color: var(--navy-deep);
+  }
+  h1 em { font-style: normal; color: var(--teal-deep); }
+
+  .sub {
+    font-size: 17px; line-height: 1.6; color: var(--muted);
+    max-width: 480px; margin: 0 0 32px;
+  }
+
+  .hero-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+
+  .btn-primary {
+    font-family: var(--sans); font-weight: 600; font-size: 15.5px;
+    background: var(--navy-deep); color: var(--white);
+    border: none; border-radius: 999px; padding: 15px 26px;
+    cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 9px;
+    transition: background .15s ease, transform .1s ease;
+  }
+  .btn-primary:hover { background: var(--teal-deep); }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-note { font-size: 13.5px; color: var(--muted); }
+
+  /* ---------- Stage: hero chat variant ---------- */
+  .stage {
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--white);
+    box-shadow: 0 20px 60px -30px rgba(15, 61, 82, 0.35);
+    overflow: hidden;
+  }
+  .stage-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 18px; border-bottom: 1px solid var(--border); background: var(--ice);
+  }
+  .stage-bar .d { width: 9px; height: 9px; border-radius: 50%; background: #C9D6D4; }
+  .stage-bar .label { margin-left: 8px; font-family: var(--mono); font-size: 12px; color: var(--slate); }
+
+  .stage-body { padding: 22px 22px 24px; }
+  .prompt-line {
+    font-size: 14.5px; color: var(--navy-deep); background: var(--ice);
+    border-radius: 10px; padding: 10px 15px; display: inline-block; margin-bottom: 16px;
+  }
+  .prompt-line .caret {
+    display: inline-block; width: 2px; height: 13px; background: var(--teal-deep);
+    margin-left: 2px; vertical-align: middle; animation: blink 1s step-start infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .card {
+    border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+    opacity: 0; transform: translateY(8px);
+    animation: rise .5s ease forwards; animation-delay: 1.4s;
+  }
+  @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+  .card-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-head-l { display: flex; align-items: center; gap: 10px; }
+  .card-head .ic {
+    width: 26px; height: 26px; border-radius: 7px; background: var(--teal);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .card-head .t { font-family: var(--serif); font-weight: 600; font-size: 14px; color: var(--navy-deep); }
+  .row { display: flex; gap: 12px; padding: 8px 16px; border-bottom: 1px solid #F0F2EC; font-size: 12.5px; }
+  .row:last-child { border-bottom: none; }
+  .row .k { width: 96px; flex-shrink: 0; font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--slate); padding-top: 1px; }
+  .row .v { color: var(--text); line-height: 1.45; }
+  .row .v.flag { color: var(--warn-text); }
+  .card-foot {
+    display: flex; align-items: center; gap: 6px; padding: 10px 16px;
+    background: var(--ice); font-size: 11px; color: var(--slate);
+  }
+
+  .live-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--mono); font-size: 10.5px; font-weight: 500; letter-spacing: .03em;
+    color: var(--live); background: var(--live-bg); border-radius: 999px; padding: 4px 9px;
+    flex-shrink: 0;
+  }
+  .live-pill .p { width: 6px; height: 6px; border-radius: 50%; background: var(--live); animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+
+  /* ---------- Stage: "inside the app" screen variant (examples 2 & 3) ---------- */
+  .stage--screen .screen-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 16px 22px; border-bottom: 1px solid var(--border);
+  }
+  .stage--screen .screen-head .t {
+    font-family: var(--serif); font-weight: 600; font-size: 15.5px; color: var(--navy-deep);
+  }
+  .stage--screen .screen-foot {
+    padding: 11px 22px; background: var(--ice); font-size: 11.5px; color: var(--slate);
+  }
+
+  .comps-table, .assets-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .comps-table th, .assets-table th {
+    text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .03em; color: var(--slate); padding: 9px 22px; border-bottom: 1px solid var(--border);
+  }
+  .comps-table td, .assets-table td { padding: 11px 22px; border-bottom: 1px solid #F0F2EC; color: var(--text); }
+  .comps-table tr:last-child td, .assets-table tr:last-child td { border-bottom: none; }
+  .comps-table .dist { color: var(--slate); font-family: var(--mono); font-size: 11.5px; }
+  .assets-table .mono { font-family: var(--mono); font-size: 11px; color: var(--slate); }
+  .assets-table .warn-cell { color: var(--warn-text); font-weight: 600; }
+
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 10.5px; font-weight: 600; padding: 3px 9px; border-radius: 999px; white-space: nowrap;
+  }
+  .status-pill .sd { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+  .status-mgmt { background: var(--ice); color: var(--navy); }
+  .status-mgmt .sd { background: var(--teal); }
+  .status-sale { background: var(--warn-bg); color: var(--warn-text); }
+  .status-sale .sd { background: #E2774C; }
+  .status-dd { background: var(--dd-bg); color: var(--dd-text); }
+  .status-dd .sd { background: #7C6FE0; }
+
+  .stat-mini-row {
+    display: flex; gap: 0; border-bottom: 1px solid var(--border);
+  }
+  .stat-mini {
+    flex: 1; padding: 14px 22px; border-right: 1px solid var(--border);
+  }
+  .stat-mini:last-child { border-right: none; }
+  .stat-mini .sl { font-size: 10.5px; color: var(--slate); margin-bottom: 3px; }
+  .stat-mini .sv { font-family: var(--serif); font-size: 21px; font-weight: 600; color: var(--navy-deep); }
+  .stat-mini.warn .sv { color: var(--warn-text); }
+
+  /* ---------- Example sections (2 & 3, alternating layout) ---------- */
+  .example-section { padding: 72px 0 10px; }
+  .example-grid {
+    display: grid; gap: 52px; align-items: center;
+  }
+  .example-grid.reverse { grid-template-columns: 0.95fr 1.05fr; }
+  .example-grid.forward { grid-template-columns: 1.05fr 0.95fr; }
+  .example-grid.forward .stage { order: 2; }
+  .example-section .eyebrow { margin-bottom: 18px; }
+  .example-section h2 {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(24px, 3vw, 32px);
+    color: var(--navy-deep); margin: 0 0 16px; line-height: 1.15;
+  }
+  .example-section p { font-size: 15px; line-height: 1.6; color: var(--muted); max-width: 440px; margin: 0; }
+
+  /* ---------- Mid-page CTA band ---------- */
+  .cta-band { background: var(--navy-deep); padding: 34px 0; margin-top: 72px; }
+  .cta-band-inner {
+    display: flex; align-items: center; justify-content: space-between; gap: 22px; flex-wrap: wrap;
+  }
+  .cta-band h3 {
+    font-family: var(--serif); color: var(--white); font-size: 21px; font-weight: 600; margin: 0 0 4px;
+  }
+  .cta-band p { color: #A9C2CB; font-size: 13.5px; margin: 0; }
+  .cta-band .btn-primary { background: var(--teal); color: var(--navy-deep); flex-shrink: 0; }
+  .cta-band .btn-primary:hover { background: #58D9CC; }
+
+  /* ---------- Facts strip ---------- */
+  .strip { padding: 76px 0 10px; }
+  .strip-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px;
+  }
+  .fact {
+    border-top: 2px solid var(--navy-deep); padding-top: 16px;
+  }
+  .fact .n { font-family: var(--mono); font-size: 12px; color: var(--teal-deep); margin-bottom: 10px; }
+  .fact h3 { font-family: var(--serif); font-size: 18px; font-weight: 600; margin: 0 0 8px; color: var(--navy-deep); }
+  .fact p { font-size: 13.5px; line-height: 1.55; color: var(--muted); margin: 0; }
+  .fact .langs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .fact .langs span {
+    font-family: var(--mono); font-size: 10.5px; color: var(--teal-deep);
+    background: var(--ice); border-radius: 6px; padding: 3px 7px;
+  }
+
+  /* ---------- Form section ---------- */
+  .form-section { padding: 84px 0 100px; }
+  .form-card {
+    background: var(--navy-deep); border-radius: 22px; padding: 52px 48px;
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center;
+  }
+  .form-card h2 {
+    font-family: var(--serif); color: var(--white); font-size: 28px;
+    line-height: 1.2; margin: 0 0 14px; font-weight: 600;
+  }
+  .form-card .fp { color: #A9C2CB; font-size: 15px; line-height: 1.6; margin: 0; }
+
+  #dc-form { display: flex; flex-direction: column; gap: 12px; }
+  .name-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  #dc-form label { font-size: 12px; color: #A9C2CB; margin-bottom: -6px; }
+  #dc-form input {
+    font-family: var(--sans); font-size: 15px; padding: 13px 16px;
+    border-radius: 10px; border: 1px solid transparent; outline: none;
+    background: rgba(255,255,255,0.08); color: var(--white); width: 100%;
+    min-width: 0;
+  }
+  #dc-form input::placeholder { color: #7FA0AA; }
+  #dc-form input:focus { border-color: var(--teal); background: rgba(255,255,255,0.12); }
+  #dc-form button {
+    font-family: var(--sans); font-weight: 600; font-size: 15px;
+    background: var(--teal); color: var(--navy-deep); border: none;
+    border-radius: 999px; padding: 14px; cursor: pointer; margin-top: 4px;
+    transition: background .15s ease;
+  }
+  #dc-form button:hover { background: #58D9CC; }
+  #dc-form button:disabled { opacity: .6; cursor: default; }
+  .form-status { font-size: 13px; color: #A9C2CB; min-height: 18px; }
+  .form-status.err { color: #FFB39A; }
+
+  .thankyou { display: none; }
+  .thankyou.show { display: block; }
+  .thankyou h3 { font-family: var(--serif); color: var(--white); font-size: 22px; margin: 0 0 10px; }
+  .thankyou p { color: #A9C2CB; font-size: 14.5px; line-height: 1.6; margin: 0; }
+
+  footer { padding: 30px 0 60px; border-top: 1px solid var(--border); }
+  footer .fw { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--muted); flex-wrap: wrap; gap: 10px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 980px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-grid .stage { max-width: 560px; }
+    .example-grid.reverse, .example-grid.forward { grid-template-columns: 1fr; gap: 32px; }
+    .example-grid.reverse .stage, .example-grid.forward .stage { order: -1; max-width: 560px; }
+    .strip-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 760px) {
+    .wrap { padding: 0 20px; }
+    .hero { padding: 32px 0 20px; }
+    .form-card { grid-template-columns: 1fr; padding: 32px 22px; }
+    .strip { padding: 56px 0 10px; }
+    .example-section { padding: 52px 0 10px; }
+    .cta-band { margin-top: 52px; }
+    .cta-band-inner { flex-direction: column; align-items: flex-start; }
+    .cta-band .btn-primary { width: 100%; justify-content: center; }
+    .stat-mini-row { flex-wrap: wrap; }
+    .stat-mini { flex: 1 1 50%; border-bottom: 1px solid var(--border); }
+  }
+  @media (max-width: 560px) {
+    .nav .logo img { height: 18px; }
+    h1 { font-size: 30px; }
+    .sub { font-size: 15.5px; }
+    .strip-grid { grid-template-columns: 1fr; }
+    .name-row { grid-template-columns: 1fr; }
+    .stage-body { padding: 16px 14px 18px; }
+    .row { flex-direction: column; gap: 2px; padding: 8px 14px; }
+    .row .k { width: auto; }
+    .comps-table, .assets-table { font-size: 11px; }
+    .comps-table th, .comps-table td, .assets-table th, .assets-table td { padding: 8px 12px; }
+    .stat-mini { padding: 12px; }
+    .stat-mini .sv { font-size: 18px; }
+    .btn-primary { width: 100%; justify-content: center; text-align: center; }
+    .form-card h2 { font-size: 23px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card, .prompt-line .caret, .live-pill .p { animation: none; opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="nav">
+    <a href="/" class="logo"><img src="/logo.png" alt="DealCase.ai" style="height:20px; width:auto;"></a>
+    <a class="cta-small" href="#get-access">Get instant access</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow"><span class="dot"></span>From the AI &amp; automation guide, to a working workspace</div>
+        <h1>You read the guide.<br>This is <em>DealCase</em> doing it.</h1>
+        <p class="sub">One workspace for your real estate portfolio — assets, contacts, templates, and an AI assistant that already knows your data. See it running on a live account, no call required.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#get-access">Get instant demo access →</a>
+          <span class="btn-note">Takes under a minute · login details land in your inbox</span>
+        </div>
+      </div>
+
+      <div class="stage" aria-hidden="true">
+        <div class="stage-bar">
+          <div class="d"></div><div class="d"></div><div class="d"></div>
+          <span class="label">DealCase.ai — Chat</span>
+        </div>
+        <div class="stage-body">
+          <div class="prompt-line">Give me an investment summary for AK-0142<span class="caret"></span></div>
+          <div class="card">
+            <div class="card-head">
+              <div class="card-head-l">
+                <div class="ic"></div>
+                <div class="t">Investment summary — AK-0142</div>
+              </div>
+            </div>
+            <div class="row"><div class="k">Overview</div><div class="v">2-bed apartment, 78 sqm, renovated 2021</div></div>
+            <div class="row"><div class="k">Valuation</div><div class="v">€410,000 (appraisal, March 2025)</div></div>
+            <div class="row"><div class="k">Tenancy</div><div class="v">Occupied — lease to Dec 2027, €1,150/mo</div></div>
+            <div class="row"><div class="k">Flag</div><div class="v flag">APE renewal due within 12 months</div></div>
+            <div class="card-foot">Saved to Documents · AK-0142 · Investment summary v1</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Example 2: "inside the app" screen, not a chat bubble — deliberately different rhythm from the hero -->
+  <section class="example-section">
+    <div class="example-grid reverse">
+      <div class="stage stage--screen" aria-hidden="true">
+        <div class="stage-bar">
+          <div class="d"></div><div class="d"></div><div class="d"></div>
+          <span class="label">DealCase.ai — Assets / AK-0142 / Comparables</span>
+        </div>
+        <div class="screen-head">
+          <div class="t">Live comparables near Via Roma 12</div>
+          <span class="live-pill"><span class="p"></span>LIVE</span>
+        </div>
+        <table class="comps-table">
+          <thead><tr><th>Address</th><th>Price</th><th>€/sqm</th><th>Dist.</th></tr></thead>
+          <tbody>
+            <tr><td>Via Torino 8</td><td>€395,000</td><td>€5,060</td><td class="dist">210m</td></tr>
+            <tr><td>C.so Buenos Aires 45</td><td>€430,000</td><td>€5,280</td><td class="dist">640m</td></tr>
+            <tr><td>Viale Certosa 12</td><td>€378,000</td><td>€4,890</td><td class="dist">890m</td></tr>
+            <tr><td>Via Plinio 22</td><td>€412,000</td><td>€5,150</td><td class="dist">1.1km</td></tr>
+          </tbody>
+        </table>
+        <div class="screen-foot">Connected market data feed · updated today</div>
+      </div>
+
+      <div>
+        <div class="eyebrow"><span class="dot"></span>Not just your data — the market too</div>
+        <h2>Live price comparables, right next to your asset.</h2>
+        <p>Open any asset and DealCase pulls current market pricing from connected data sources alongside your own portfolio — so a valuation conversation doesn't mean opening three other tabs.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="strip">
+    <div class="strip-grid">
+      <div class="fact">
+        <div class="n">01</div>
+        <h3>Your data stays in your region</h3>
+        <p>Hosting is configured per account — EU, Gulf, US and more — so your portfolio data never has to leave the region you choose.</p>
+      </div>
+      <div class="fact">
+        <div class="n">02</div>
+        <h3>Never used to train models</h3>
+        <p>Your documents and conversations stay yours — excluded from model training by contract, not just by promise.</p>
+      </div>
+      <div class="fact">
+        <div class="n">03</div>
+        <h3>One place, not five tools</h3>
+        <p>Assets, contacts, templates and documents live together, so the AI answers from your actual portfolio, not a blank slate.</p>
+      </div>
+      <div class="fact">
+        <div class="n">04</div>
+        <h3>Seven languages, one workspace</h3>
+        <p>Your team works in the language they already use — the workspace and AI responses follow.</p>
+        <div class="langs">
+          <span>EN</span><span>IT</span><span>FR</span><span>ES</span><span>DE</span><span>PT</span><span>AR</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap cta-band-inner">
+      <div>
+        <h3>Ready to see it on your own portfolio?</h3>
+        <p>Live demo access, pre-loaded with real data — no sales call.</p>
+      </div>
+      <a class="btn-primary" href="#get-access">Get instant demo access →</a>
+    </div>
+  </section>
+
+  <!-- Example 3: portfolio dashboard view — a third, distinct visual pattern (stats + table, no chat at all) -->
+  <section class="example-section">
+    <div class="example-grid forward">
+      <div>
+        <div class="eyebrow"><span class="dot"></span>Your whole portfolio, not just one asset</div>
+        <h2>See status, value, and what needs attention — at a glance.</h2>
+        <p>Every asset is a structured record, not a file in a folder. Filter by status, spot what's expiring, and jump straight into a chat about any one of them.</p>
+      </div>
+
+      <div class="stage stage--screen" aria-hidden="true">
+        <div class="stage-bar">
+          <div class="d"></div><div class="d"></div><div class="d"></div>
+          <span class="label">DealCase.ai — Assets</span>
+        </div>
+        <div class="stat-mini-row">
+          <div class="stat-mini"><div class="sl">Total assets</div><div class="sv">52</div></div>
+          <div class="stat-mini"><div class="sl">Total value</div><div class="sv">€38.4M</div></div>
+          <div class="stat-mini warn"><div class="sl">Needs attention</div><div class="sv">5</div></div>
+        </div>
+        <table class="assets-table">
+          <thead><tr><th>ID</th><th>Title</th><th>Status</th><th>APE</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="mono">AK-0142</td><td>Via Roma 12, Milano</td>
+              <td><span class="status-pill status-mgmt"><span class="sd"></span>Under mgmt</span></td>
+              <td class="warn-cell">2026-09-30</td>
+            </tr>
+            <tr>
+              <td class="mono">AK-0098</td><td>C.so Buenos Aires 45</td>
+              <td><span class="status-pill status-sale"><span class="sd"></span>For sale</span></td>
+              <td>2027-02-14</td>
+            </tr>
+            <tr>
+              <td class="mono">AK-0211</td><td>Via Garibaldi 8, Torino</td>
+              <td><span class="status-pill status-dd"><span class="sd"></span>Due diligence</span></td>
+              <td class="warn-cell">2026-07-01</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="screen-foot">52 properties across the portfolio</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="form-section" id="get-access">
+    <div class="form-card">
+      <div>
+        <h2>Log in and see it on your own questions.</h2>
+        <p class="fp">Leave your details and we'll send a live demo login to your inbox — pre-loaded with a real portfolio, ready to explore. No sales call attached.</p>
+      </div>
+
+      <div id="form-wrap">
+        <form id="dc-form">
+          <div class="name-row">
+            <input type="text" id="dc-firstname" name="firstname" placeholder="First name" required autocomplete="given-name" aria-label="First name">
+            <input type="text" id="dc-lastname" name="lastname" placeholder="Surname" required autocomplete="family-name" aria-label="Surname">
+          </div>
+          <input type="email" id="dc-email" name="email" placeholder="Work email" required autocomplete="email" aria-label="Work email">
+          <button type="submit" id="dc-submit">Get instant demo access</button>
+          <div class="form-status" id="dc-status"></div>
+        </form>
+
+        <div class="thankyou" id="dc-thanks">
+          <h3>Got it — thanks.</h3>
+          <p>We've received your request. Your DealCase login will land in your inbox shortly, usually within 15 minutes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="fw">
+      <span>DealCase.ai</span>
+      <span>Region-hosted · no model training on your data · built for real estate teams</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   SETUP — replace before going live:
+   1) N8N_WEBHOOK_URL below — the Production URL from the
+      "Landing page form submit" Webhook node in the
+      "DealCase - Landing Page Form Handler" n8n workflow.
+      That workflow logs the submission to Google Sheets and
+      emails you a notification. No thank-you email is sent —
+      the on-page message below is the instant acknowledgment.
+      Credentials follow later from a separate dispatch workflow
+      that reads the same sheet, within ~15 minutes.
+   ============================================================ */
+const N8N_WEBHOOK_URL = "https://YOUR-N8N-INSTANCE/webhook/dealcase-demo-request";
+
+const form = document.getElementById('dc-form');
+const status = document.getElementById('dc-status');
+const submitBtn = document.getElementById('dc-submit');
+const thanks = document.getElementById('dc-thanks');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  status.textContent = '';
+  status.classList.remove('err');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending…';
+
+  const firstname = document.getElementById('dc-firstname').value.trim();
+  const lastname = document.getElementById('dc-lastname').value.trim();
+  const email = document.getElementById('dc-email').value.trim();
+
+  try {
+    const res = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ firstname, lastname, email })
+    });
+
+    if (!res.ok) throw new Error('submit failed');
+
+    form.style.display = 'none';
+    thanks.classList.add('show');
+  } catch (err) {
+    status.textContent = "Something went wrong — please try again in a moment.";
+    status.classList.add('err');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Get instant demo access';
+  }
+});
+</script>
+
+</body>
+</html>
