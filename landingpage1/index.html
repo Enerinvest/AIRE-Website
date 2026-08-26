@@ -576,6 +576,10 @@ form.addEventListener('submit', async (e) => {
 
     if (!res.ok) throw new Error('submit failed');
 
+    if (typeof gtag === 'function') {
+      gtag('event', 'generate_lead', { method: 'landingpage1_form' });
+    }
+
     form.style.display = 'none';
     thanks.classList.add('show');
   } catch (err) {
