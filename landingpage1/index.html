@@ -538,18 +538,12 @@
 </div>
 
 <script>
-/* ============================================================
-   SETUP — replace before going live:
-   1) N8N_WEBHOOK_URL below — the Production URL from the
-      "Landing page form submit" Webhook node in the
-      "DealCase - Landing Page Form Handler" n8n workflow.
-      That workflow logs the submission to Google Sheets and
-      emails you a notification. No thank-you email is sent —
-      the on-page message below is the instant acknowledgment.
-      Credentials follow later from a separate dispatch workflow
-      that reads the same sheet, within ~15 minutes.
-   ============================================================ */
-const N8N_WEBHOOK_URL = "https://YOUR-N8N-INSTANCE/webhook/dealcase-demo-request";
+/* Webhook: "DealCase - Landing Page Form Handler" n8n workflow.
+   Logs the submission to Google Sheets and emails a notification.
+   No thank-you email is sent — the on-page message below is the
+   instant acknowledgment. Credentials follow later from a separate
+   dispatch workflow that reads the same sheet, within ~15 minutes. */
+const N8N_WEBHOOK_URL = "https://revalcap.app.n8n.cloud/webhook/demo-access";
 
 const form = document.getElementById('dc-form');
 const status = document.getElementById('dc-status');
